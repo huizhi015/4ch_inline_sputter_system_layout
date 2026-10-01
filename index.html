@@ -314,15 +314,15 @@
                     <h2>Gauge Setting</h2>
                     <div class="parameter-gauge-table">
                         <span></span><span class="parameter-gauge-head">設定值</span><span class="parameter-gauge-head">實際值</span><span></span><span class="parameter-gauge-head">設定值</span><span class="parameter-gauge-head">實際值</span>
-                        <span>CG1(Torr)</span><input id="gauge-set-cg1" type="text" value="5.00E-02" onchange="setGaugeParameter('cg1',this)"><b id="parameter-gauge-ch1" class="parameter-reading">7.60E+02</b>
-                        <span>BG1_L(Torr)</span><input id="gauge-set-bg1-l" type="text" value="6.00E-02" onchange="setGaugeParameter('bg1L',this)"><b id="parameter-gauge-bg1" class="parameter-reading">7.60E+02</b>
-                        <span>CG2-1(Torr)</span><input id="gauge-set-cg2_1" type="text" value="8.00E-02" onchange="setGaugeParameter('cg2_1',this)"><b id="parameter-gauge-ch2" class="parameter-reading">7.60E+02</b>
+                        <span>CG1(Torr)</span><input id="gauge-set-cg1" type="text" value="5.00E-02" onchange="setGaugeParameter('cg1',this)"><b id="parameter-gauge-ch1" class="parameter-reading">7.6E+02</b>
+                        <span>BG1_L(Torr)</span><input id="gauge-set-bg1-l" type="text" value="6.00E-02" onchange="setGaugeParameter('bg1L',this)"><b id="parameter-gauge-bg1" class="parameter-reading">&gt;1.0E+00</b>
+                        <span>CG2-1(Torr)</span><input id="gauge-set-cg2_1" type="text" value="8.00E-02" onchange="setGaugeParameter('cg2_1',this)"><b id="parameter-gauge-ch2" class="parameter-reading">7.6E+02</b>
                         <span>BG1_H(Torr)</span><input id="gauge-set-bg1-h" type="text" value="1.00E-02" onchange="setGaugeParameter('bg1H',this)"><span class="parameter-reading">—</span>
-                        <span>CG2-2(Torr)</span><input id="gauge-set-cg2_2" type="text" value="8.00E-02" onchange="setGaugeParameter('cg2_2',this)"><b id="parameter-gauge-cp2" class="parameter-reading">7.60E+02</b>
-                        <span>BG2_L(Torr)</span><input id="gauge-set-bg2-l" type="text" value="9.00E-03" onchange="setGaugeParameter('bg2L',this)"><b id="parameter-gauge-bg2" class="parameter-reading">7.60E+02</b>
-                        <span>CG3-2(Torr)</span><input id="gauge-set-cg3_2" type="text" value="8.00E-02" onchange="setGaugeParameter('cg3_2',this)"><b id="parameter-gauge-cp3" class="parameter-reading">7.60E+02</b>
+                        <span>CG2-2(Torr)</span><input id="gauge-set-cg2_2" type="text" value="8.00E-02" onchange="setGaugeParameter('cg2_2',this)"><b id="parameter-gauge-cp2" class="parameter-reading">7.6E+02</b>
+                        <span>BG2_L(Torr)</span><input id="gauge-set-bg2-l" type="text" value="9.00E-03" onchange="setGaugeParameter('bg2L',this)"><b id="parameter-gauge-bg2" class="parameter-reading">&gt;1.0E+00</b>
+                        <span>CG3-2(Torr)</span><input id="gauge-set-cg3_2" type="text" value="8.00E-02" onchange="setGaugeParameter('cg3_2',this)"><b id="parameter-gauge-cp3" class="parameter-reading">7.6E+02</b>
                         <span>BG2_H(Torr)</span><input id="gauge-set-bg2-h" type="text" value="1.00E-03" onchange="setGaugeParameter('bg2H',this)"><span class="parameter-reading">—</span>
-                        <span>IG2(Torr)</span><input id="gauge-set-ig2" type="text" value="8.00E-05" onchange="setGaugeParameter('ig2',this)"><b id="parameter-gauge-ig2" class="parameter-reading">7.60E+02</b><span></span><span></span><span></span>
+                        <span>IG2(Torr)</span><input id="gauge-set-ig2" type="text" value="8.00E-05" onchange="setGaugeParameter('ig2',this)"><b id="parameter-gauge-ig2" class="parameter-reading">7.6E+02</b><span></span><span></span><span></span>
                         <span>StartIG2(Torr)</span><input id="gauge-set-ig2-start" type="text" value="5.00E-03" onchange="setGaugeParameter('ig2Start',this)"><span class="parameter-reading">—</span><span></span><span></span><span></span>
                     </div>
                 </section>
@@ -531,6 +531,7 @@
                 <label title="低壓段參考值；高壓時模型還會依下方倍率放大，並非 BP 的標稱抽速。">BP1 低壓參考 <input id="param-bp-speed" type="number" min="1" max="10000" step="1" value="400" oninput="previewPumpSpeed('bpSpeedLs', this)" onchange="setVacuumParameter('bpSpeedLs', this)" class="w-16 border border-gray-500 px-1"> L/s</label>
                 <label title="舊版為了配合粗抽速度，將 RP 在大氣壓時放大 17 倍；這是經驗加速項，不是可由標稱抽速推算的物理泵曲線。">RP 高壓倍率 <input id="param-rp-density-gain" type="number" min="1" max="30" step="0.5" value="17" onchange="setVacuumParameter('rpHighPressureGain', this)" class="w-16 border border-gray-500 px-1"> 倍</label>
                 <label title="舊版將 BP 在約 1 Torr 時放大 5 倍；需用本機粗抽曲線校準。">BP 高壓倍率 <input id="param-bp-density-gain" type="number" min="1" max="30" step="0.5" value="5" onchange="setVacuumParameter('bpHighPressureGain', this)" class="w-16 border border-gray-500 px-1"> 倍</label>
+                <label title="CH1 單獨進行 RF 清潔且 V1.1 或 V1.2 進氣時，RV 通往 RP/BP 的有效導通比例。預設 0.03，讓單路 200 sccm 的 BG1 約在 3E−2 Torr；只改真實 CH1 抽氣流量，不修改 BG 感測器讀值倍率。依實機 BG1 與流量校準。">RF 進氣時 CH1 RV 導通 <input id="param-rf-rv-conductance" type="number" min="0.005" max="1" step="0.005" value="0.03" onchange="setVacuumParameter('rfCh1RvConductance', this)" class="w-16 border border-gray-500 px-1"> 倍</label>
                 <label>CP2／CP3 各 <input id="param-cp-speed" type="number" min="1" max="10000" step="1" value="1200" oninput="previewPumpSpeed('cpSpeedLs', this)" onchange="setVacuumParameter('cpSpeedLs', this)" class="w-16 border border-gray-500 px-1"> L/s</label>
                 <label title="本機台 CP 在 10 K、未滿載時的可達壓力；零漏氣請設定背景進氣為 0，CP 可達壓力不可設為 0。">CP 冷態可達壓力 <input id="param-cp-base-pressure" type="number" min="1e-7" max="0.001" step="any" value="1e-7" oninput="previewPumpSpeed('cpBasePressureTorr', this)" onchange="setVacuumParameter('cpBasePressureTorr', this)" class="w-24 border border-gray-500 px-1"> Torr（本機最低 1E−7；10 K／空載）</label>
                 <label>CP 各氣體容量 <input id="param-cp-capacity" type="number" min="1" max="1000000" step="10" value="250000" onchange="setVacuumParameter('cpCapacityTorrL', this)" class="w-20 border border-gray-500 px-1"> Torr·L（100%）</label>
@@ -549,8 +550,10 @@
                 <label title="滿載失去冷卻能力時的簡化熱失控模型；ULVAC 的自然／PURGE 回溫時間不適用於此瞬態，需另依實機校正。">滿載失控回溫時間常數 <input id="param-cp-overload-warm" type="number" min="1" max="100000" step="1" value="48" onchange="setVacuumParameter('cpOverloadWarmTauSec', this)" class="w-16 border border-gray-500 px-1"> 秒</label>
                 <label title="每次真正吸附到的氣體按其占總容量的比例增加溫度；原設定 35 K，請以本機量測校正。VENT 開啟時間本身不會直接強制升溫。">吸附滿容量等效升溫 <input id="param-cp-capture-heat" type="number" min="0" max="2000" step="1" value="35" onchange="setVacuumParameter('cpCaptureHeatKPerCapacity', this)" class="w-16 border border-gray-500 px-1"> K</label>
                 <label>MV 高壓警示門檻 <input id="param-cp-crossover" type="number" min="0.000001" max="1" step="0.001" value="0.01" onchange="setVacuumParameter('cpCrossoverTorr', this)" class="w-20 border border-gray-500 px-1"> Torr</label>
-                <label title="本機 CG 對 Ar 的經驗讀值倍率 0.45；未確認 CG 感測器型號，仍需以實際校正曲線核對。只調整 CG 指示值，不改腔體氣體數量或 CP 吸附。">CG Ar 顯示倍率 <input id="param-cg-argon-response" type="number" min="0.1" max="2" step="0.05" value="0.45" onchange="setVacuumParameter('cgArgonResponse', this)" class="w-16 border border-gray-500 px-1"> 倍（本機經驗值）</label>
-                <label title="未確認 BG 感測器型號時，預設 1（不折減腔體 Ar 真實分壓）。只有取得 BG 型號及 Ar 校正資料，才應依實機更改；此倍率只改 BG 顯示，不改抽氣。">BG Ar 顯示倍率 <input id="param-bg-argon-response" type="number" min="0.05" max="2" step="0.01" value="0.85" onchange="setVacuumParameter('bgArgonResponse', this)" class="w-16 border border-gray-500 px-1"> 倍</label>
+                <label title="提供的型錄圖中，小紅色外形對應 Edwards APG 系列 Pirani；精確型號仍需實機銘牌確認。本機 CG 對 Ar 的經驗讀值倍率 0.45，需以實際校正曲線核對。只調整 CG 指示值，不改腔體氣體數量或 CP 吸附。">CG Ar 顯示倍率 <input id="param-cg-argon-response" type="number" min="0.1" max="2" step="0.05" value="0.45" onchange="setVacuumParameter('cgArgonResponse', this)" class="w-16 border border-gray-500 px-1"> 倍（本機經驗值）</label>
+                <label title="提供的型錄圖中，大紅色圓形外形對應 Edwards AIM 系列倒磁控冷陰極計；精確型號及 Ar 校正曲線仍需銘牌與手冊。此設定只影響 IG2 顯示與其流程判斷，不沿用 CG 的 0.45 倍，也不改變氣體數量。">IG2 Ar 顯示倍率 <input id="param-ig-argon-response" type="number" min="0.1" max="3" step="0.05" value="1" onchange="setVacuumParameter('igArgonResponse', this)" class="w-16 border border-gray-500 px-1"> 倍（待校正）</label>
+                <label title="照片確認為 INFICON CDG025D 1 Torr 電容膜片計，對 Ar 不需氣體倍率修正。預設 1；僅有實機校準資料時調整此整體顯示倍率，不改腔體壓力或抽氣。">BG 顯示校準倍率 <input id="param-bg-calibration" type="number" min="0.05" max="2" step="0.01" value="1" onchange="setVacuumParameter('bgCalibrationScale', this)" class="w-16 border border-gray-500 px-1"> 倍</label>
+                <label title="這是模擬器控制畫面的數位平均時間，不是 CDG025D 約 30 ms 的感測器反應時間；0 秒可顯示未平滑的分子樣本波動。氣體或閥門造成的大幅壓力變化會快速反映。">BG 畫面平均時間 <input id="param-bg-display-average" type="number" min="0" max="120" step="1" value="20" onchange="setVacuumParameter('bgDisplayAverageSec', this)" class="w-16 border border-gray-500 px-1"> 秒</label>
                 <label>每腔容積 <input id="param-chamber-volume" type="number" min="1" max="100000" step="10" value="1200" onchange="setVacuumParameter('chamberVolumeL', this)" class="w-20 border border-gray-500 px-1"> L</label>
                 <label>CP 本體容積（各）<input id="param-foreline-volume" type="number" min="1" max="100000" step="10" value="300" onchange="setVacuumParameter('forelineVolumeL', this)" class="w-20 border border-gray-500 px-1"> L</label>
                 <label>GV 開啟最大壓差 <input id="param-gate-diff" type="number" min="1" max="100" step="1" value="20" onchange="setVacuumParameter('gateOpenDiffTorr', this)" class="w-16 border border-gray-500 px-1"> Torr</label>
@@ -564,9 +567,9 @@
             <summary class="font-bold cursor-pointer">模型可信度與實機校準提醒</summary>
             <div class="pt-2 space-y-1 text-gray-800">
                 <p><b>有物理依據：</b>760 Torr 大氣壓、sccm 轉成進氣量、自由氣體分子總量換算壓力；開關閥改變連通範圍，抽氣／漏氣與放氣參與收支。GV 開門壓差上限 20 Torr 接近部分產品的規格，仍以實際閥型為準。</p>
-                <p><b>依這台機器的經驗暫定：</b>30 mm/s 下跨兩個 930 mm 腔距約 62 秒；CP 約 50 分鐘降到 20 K、再約 10 分鐘到 10 K；雙路各 200 sccm Ar 時 BG 約 3E−3 Torr；CG 對 Ar 的 0.45 倍是本機觀察值。暫假設 BG 讀值接近真實總壓，藉此調整開啟 MV 時的有效抽氣；若 BG 對 Ar 的實際校正係數不是 1，腔內真實壓力與抽速仍需一起重估。</p>
-                <p><b>需用實機資料校準：</b>每腔 1200 L、RP／BP 高壓倍率、CP 標稱 1200 L/s 與腔體連接導通、各氣體吸附機率／250000 Torr·L 容量、背景進氣、CG／BG 型號、冷卻及再生曲線。一般雙段 CP 中，Ar／N₂／O₂ 主要凝結在約 15 K 冷面；活性碳主要處理 H₂／He／Ne，畫面的圓圈只代表整組捕集面。</p>
-                <p><b>目前是教學示意：</b>畫面分子只是巨大分子群的樣本；靠樣本撞到幫浦入口觸發抽氣，會有隨機波動。GV2 開啟後四腔即時均壓；CP 滿載後 48 秒失控回溫、三次 PURGE／抽氣回復 0%、每次 Ar⁺ 擊出固定靶原子數，均非可直接預測實機的定律。鍍膜顯示的是相對膜厚，沒有 nm 校準。</p>
+                <p><b>依這台機器的經驗暫定：</b>30 mm/s 下跨兩個 930 mm 腔距約 62 秒；CP 約 50 分鐘降到 20 K、再約 10 分鐘到 10 K；雙路各 200 sccm Ar 時 BG2 約 3E−3 Torr；RF 單路 200 sccm 時，CH1 RV 導通預設調至讓 BG1 約 3E−2 Torr，確切目標仍需以實機確認；CG 對 Ar 的 0.45 倍是本機觀察值。照片所示 BG 為 INFICON CDG025D 1 Torr 電容膜片計，對 Ar 不套用氣體種類校正；預設直接讀腔體總壓。提供的型錄圖片顯示小紅色對應 Edwards APG 類 Pirani、大紅色圓形對應 AIM 類冷陰極 IG2，仍待實機銘牌確認確切型號。</p>
+                <p><b>需用實機資料校準：</b>每腔 1200 L、RP／BP 高壓倍率、CP 標稱 1200 L/s 與腔體連接導通、各氣體吸附機率／250000 Torr·L 容量、背景進氣、CG／IG2 的 Ar 校正曲線、控制器的 BG 顯示平均時間、冷卻及再生曲線。一般雙段 CP 中，Ar／N₂／O₂ 主要凝結在約 15 K 冷面；活性碳主要處理 H₂／He／Ne，畫面的圓圈只代表整組捕集面。</p>
+                <p><b>目前是教學示意：</b>畫面分子只是巨大分子群的樣本；靠樣本撞到幫浦入口觸發抽氣，會有隨機波動。BG 顯示採用可調的畫面數位平均來壓低樣本抖動，感測器本身並非慢速；1 Torr 型超出 1 Torr 或低於 1E−4 Torr 時只顯示超／低量程，實際控制器的字樣仍待確認。GV2 開啟後四腔即時均壓；CP 滿載後 48 秒失控回溫、三次 PURGE／抽氣回復 0%、每次 Ar⁺ 擊出固定靶原子數，均非可直接預測實機的定律。鍍膜顯示的是相對膜厚，沒有 nm 校準。</p>
             </div>
         </details>
         <details class="bg-[#d4d0c8] border border-gray-500 px-2 py-1 mb-1 text-xs">
@@ -624,7 +627,7 @@
         const SPEED_MM_PER_SEC = 30;
         let manualConveyorSpeedMmSec = SPEED_MM_PER_SEC;
         let autoTransitSpeedMmSec = 80;
-        let manualRfPowerW = 480;
+        let manualRfPowerW = 750;
         // Machine timing: at 30 mm/s a three-chamber pass crosses two
         // 930 mm chamber pitches in 62 seconds (four chambers: 93 seconds).
         const CHAMBER_LENGTH_MM = 930;
@@ -647,11 +650,11 @@
         let cycleTimerActive = false;
         let pumpTimerActive = false;
         let autoRfEnabled = true;
-        let autoRfPowerW = 480;
+        let autoRfPowerW = 750;
         let autoRfSeconds = 30;
         let autoRfPressureTorr = 5e-2;
         let autoRfArFlowSccm = 200;
-let autoRfO2FlowSccm = 200;
+        let autoRfO2FlowSccm = 200;
         const autoRfGases = new Set(['Ar']);
         const autoSelectedTargets = new Set(); // Select only during auto standby; does not energize DC.
         let autoTargetQuickPick = false;
@@ -788,6 +791,7 @@ const dcLayerTargets = ['DC1_A', 'DC1_B', 'DC2_A', 'DC2_B'];
             bpSpeedLs: 400,
             rpHighPressureGain: 17,
             bpHighPressureGain: 5,
+            rfCh1RvConductance: .03,
             cpSpeedLs: 1200,
             cpBasePressureTorr: 1e-7, // Machine-specific cold CP adsorption limit, not a gauge offset.
             cpCapacityTorrL: 250000,
@@ -801,7 +805,9 @@ const dcLayerTargets = ['DC1_A', 'DC1_B', 'DC2_A', 'DC2_B'];
             cpCaptureHeatKPerCapacity: 35,
             cpCrossoverTorr: 1.0e-2,
             cgArgonResponse: .45,
-            bgArgonResponse: .85,
+            igArgonResponse: 1,
+            bgCalibrationScale: 1,
+            bgDisplayAverageSec: 20,
             chamberVolumeL: 1200,
             forelineVolumeL: 300,
             gateOpenDiffTorr: 20,
@@ -811,6 +817,7 @@ const dcLayerTargets = ['DC1_A', 'DC1_B', 'DC2_A', 'DC2_B'];
         const chamberPressure = { ch1: ATM_PRESSURE_TORR, ch2: ATM_PRESSURE_TORR, ch3: ATM_PRESSURE_TORR, ch4: ATM_PRESSURE_TORR };
         // BG1/BG2 sensing sides are isolated from the chamber when their VB is closed.
         const bgPressure = { bg1: ATM_PRESSURE_TORR, bg2: ATM_PRESSURE_TORR };
+        const bgValveWasOpen = { bg1: false, bg2: false };
         // Pressure below each CP: FV connects the RP/BP train, then a running CP
         // continues evacuating its own gauge when FV is closed.
         const cpForelinePressure = { ch2: ATM_PRESSURE_TORR, ch3: ATM_PRESSURE_TORR };
@@ -823,10 +830,13 @@ const dcLayerTargets = ['DC1_A', 'DC1_B', 'DC2_A', 'DC2_B'];
                     (key.startsWith('ch') ? vacuumParameters.chamberVolumeL :
                      key.startsWith('cp') ? vacuumParameters.forelineVolumeL :
                      key === 'line' ? 80 : 5) * MOLECULES_PER_TORR_L]));
-        // Track only Ar's partial population for the CG's gas correction.
-        // Total pressure and every pump/valve transition still use gasMolecules.
+        // Track Ar and O2 populations inside each chamber. N2 and residual
+        // air are the balance of the conserved total molecule count. These
+        // partial populations drive the tracer colors after gates open.
         const gasArgonMolecules = Object.fromEntries(['ch1', 'ch2', 'ch3', 'ch4']
             .map(key => [key, gasMolecules[key] * .0093]));
+        const gasOxygenMolecules = Object.fromEntries(['ch1', 'ch2', 'ch3', 'ch4']
+            .map(key => [key, gasMolecules[key] * .2095]));
         const gasTracers = { ch1: [], ch2: [], ch3: [], ch4: [] };
         const processGasFlights = [];
         const processGasFlowSccm = { V1_1: 200, V1_2: 200, V2: 200, V3: 200 };
@@ -857,7 +867,8 @@ const dcLayerTargets = ['DC1_A', 'DC1_B', 'DC2_A', 'DC2_B'];
             DC2_B: { chamber: 'ch3', x: 2.65, color: '#b8ffe9' }
         };
         const sputterAtoms = [];
-        const ionImpacts = []; // Existing Ar tracers ionize, then travel to a powered target.
+        const ionImpacts = []; // An Ar sample becomes an ion; the rest of its molecular packet keeps roaming.
+        const ionNeutralFlights = []; // Neutral Ar returning from the target, represented by the same sampled gas packet.
         const impactSparks = []; // Brief flash exactly where an Ar ion strikes.
         const cleaningParticles = []; // RF Ar ions / O2 radicals reach the tray.
         const cleaningDebris = []; // Material removed from the tray surface.
@@ -890,8 +901,9 @@ const dcLayerTargets = ['DC1_A', 'DC1_B', 'DC2_A', 'DC2_B'];
         const AUTO_TYPE_STEP_INTERVAL_MS = 2000;
         const gauges = { bg1: '', bg2: '', cg1: '', cg2_1: '', cg2_2: '', cg3_2: '' };
         let cg2_1GaugeName = '1eCG2_1';
-        // BG is a gauge on the same gas as CG. Its empirical Ar response is
-        // separate because the installed gauge type and calibration are unknown.
+        // The photographed BG is a CDG025D 1 Torr capacitance manometer: its
+        // reading is gas-independent. HMI averaging below is separate from its
+        // approximately 30 ms sensor response.
 
         const valves = {
             GV1: false,     // Left of CH1
@@ -914,6 +926,8 @@ const dcLayerTargets = ['DC1_A', 'DC1_B', 'DC2_A', 'DC2_B'];
             PURGE3: false,
             FV3: false
         };
+        let gv2LastVisualState = valves.GV2;
+        const gv2VisualMix = { active: false, ready: [true, true, true, true] };
         const gateTransitions = { GV1: null, GV2: null };
         const GATE_MOTION_SECONDS = 1;
         let gateBlinkSeconds = 0;
@@ -1997,12 +2011,13 @@ const dcLayerTargets = ['DC1_A', 'DC1_B', 'DC2_A', 'DC2_B'];
             const molecules = region.reduce((sum, node) => sum + gasMolecules[node], 0);
             const argon = region.reduce((sum, node) =>
                 sum + gasArgonMolecules[node], 0);
-            if (molecules > 0 && Math.random() < Math.min(1, argon / molecules))
-                return 'Ar';
-            // The small residual from the original air is mostly N2 and O2;
-            // new Ar does not create more of either one in the tracer sample.
-            return Math.random() < atmosphereFractions.N2 /
-                (atmosphereFractions.N2 + atmosphereFractions.O2) ? 'N2' : 'O2';
+            const oxygen = region.reduce((sum, node) =>
+                sum + gasOxygenMolecules[node], 0);
+            if (molecules <= 0) return 'N2';
+            const draw = Math.random() * molecules;
+            if (draw < argon) return 'Ar';
+            if (draw < argon + oxygen) return 'O2';
+            return 'N2';
         }
 
         // At high vacuum the number of visible samples follows the pressure
@@ -2135,6 +2150,14 @@ const dcLayerTargets = ['DC1_A', 'DC1_B', 'DC2_A', 'DC2_B'];
                 (1 + (vacuumParameters.bpHighPressureGain - 1) * Math.sqrt(density));
         }
 
+        function ch1RoughingSpeed(pressure) {
+            // A separate, machine-specific RF process conductance. At zero
+            // process gas the original high-speed roughing curve remains.
+            const rfGas = !valves.GV2 && (valves.V1_1 || valves.V1_2);
+            return effectivePumpSpeed(pressure) *
+                (rfGas ? vacuumParameters.rfCh1RvConductance : 1);
+        }
+
         function pumpSupplyPressure() {
             let pressure = gasPressure('line');
             if (valves.RV1 || valves.Slow_RV) pressure = Math.max(pressure, gasPressure('ch1'));
@@ -2170,7 +2193,7 @@ const dcLayerTargets = ['DC1_A', 'DC1_B', 'DC2_A', 'DC2_B'];
                 (chamberPressure - gasPressure('line')) / chamberPressure));
             if (pressureDrive <= 0) return;
 
-            const speed = effectivePumpSpeed(chamberPressure);
+            const speed = ch1RoughingSpeed(chamberPressure);
             const height = Math.max(1, canvas.height * .22 - 8);
             const radius = Math.min(175, 32 + 30 * Math.log2(1 + speed / 65));
             const acceleration = Math.min(600, 70 * Math.pow(speed / 65, .65)) *
@@ -2227,11 +2250,18 @@ const dcLayerTargets = ['DC1_A', 'DC1_B', 'DC2_A', 'DC2_B'];
             if (!(count > 0)) return 0;
             const argon = source in gasArgonMolecules ?
                 count * gasArgonMolecules[source] / Math.max(1, gasMolecules[source]) : 0;
+            const oxygen = source in gasOxygenMolecules ?
+                count * gasOxygenMolecules[source] / Math.max(1, gasMolecules[source]) : 0;
             if (source in gasArgonMolecules)
                 gasArgonMolecules[source] = Math.max(0, gasArgonMolecules[source] - argon);
+            if (source in gasOxygenMolecules)
+                gasOxygenMolecules[source] = Math.max(0, gasOxygenMolecules[source] - oxygen);
             if (destination in gasArgonMolecules)
                 gasArgonMolecules[destination] += source in gasArgonMolecules ?
                     argon : count * .0093;
+            if (destination in gasOxygenMolecules)
+                gasOxygenMolecules[destination] += source in gasOxygenMolecules ?
+                    oxygen : count * .2095;
             gasMolecules[source] -= count;
             gasMolecules[destination] += count;
             return count;
@@ -2273,19 +2303,27 @@ const dcLayerTargets = ['DC1_A', 'DC1_B', 'DC2_A', 'DC2_B'];
             const speedRatio = species === 'Ar' ? CP_ARGON_SPEED_RATIO : 1;
             const argonInChamber = Math.max(0, Math.min(gasMolecules[chamber],
                 gasArgonMolecules[chamber]));
+            const oxygenInChamber = Math.max(0, Math.min(
+                gasMolecules[chamber] - argonInChamber, gasOxygenMolecules[chamber]));
             // A nitrogen/oxygen dot cannot secretly carry away an Ar packet
             // when Ar sticking has been configured to zero.
             const speciesAvailable = species === 'Ar' ? argonInChamber :
-                species ? Math.max(0, gasMolecules[chamber] - argonInChamber) :
-                    gasMolecules[chamber];
+                species === 'O2' ? oxygenInChamber :
+                species === 'N2' ? Math.max(0,
+                    gasMolecules[chamber] - argonInChamber - oxygenInChamber) :
+                gasMolecules[chamber];
             const caught = Math.min(remaining, speciesAvailable,
                 cpContactBudget[cp] * speedRatio, availableAboveLimit);
             if (caught <= 0) return 0;
             const argonShare = gasArgonMolecules[chamber] / Math.max(1, gasMolecules[chamber]);
+            const oxygenShare = gasOxygenMolecules[chamber] / Math.max(1, gasMolecules[chamber]);
             gasMolecules[chamber] -= caught;
             gasArgonMolecules[chamber] = Math.max(0,
                 gasArgonMolecules[chamber] - (species === 'Ar' ? caught :
                     species ? 0 : caught * argonShare));
+            gasOxygenMolecules[chamber] = Math.max(0,
+                gasOxygenMolecules[chamber] - (species === 'O2' ? caught :
+                    species ? 0 : caught * oxygenShare));
             cpContactBudget[cp] = Math.max(0,
                 cpContactBudget[cp] - caught / speedRatio);
             cpContactWaitSeconds[cp] = 0;
@@ -2376,7 +2414,13 @@ const dcLayerTargets = ['DC1_A', 'DC1_B', 'DC2_A', 'DC2_B'];
                     Math.floor(backgroundTracerRemainder[key]));
                 const minimum = Math.min(desired,
                     Math.max(1, Math.round(desired * .4)));
-                const extra = Math.min(gasTracersInitialized ?
+                // When CH1 gas enters newly opened GV2, do not populate the
+                // downstream chambers by cloning their old residual air. The
+                // first CH1 tracer must cross each boundary before that
+                // chamber can split samples of the incoming gas packet.
+                const waitingForCh1Gas = gv2VisualMix.active && index > 0 &&
+                    !gv2VisualMix.ready[index];
+                const extra = waitingForCh1Gas ? 0 : Math.min(gasTracersInitialized ?
                     (incoming ? 8 : backgroundBudget ? backgroundBudget :
                         particles.length === 0 && desired > 0 ? 1 : sparse ? 0 : 1) : desired,
                     Math.max(0, (gasTracersInitialized && !incoming &&
@@ -2393,13 +2437,20 @@ const dcLayerTargets = ['DC1_A', 'DC1_B', 'DC2_A', 'DC2_B'];
                             backgroundTracerRemainder[key] - 1);
                     else if (!inlet)
                         tracer.species = chamberTracerSpecies(key);
-                    const parent = particles.length && gasTracersInitialized && !inlet ?
-                        particles[Math.floor(Math.random() * particles.length)] : null;
+                    const incomingParents = gv2VisualMix.active && index > 0 ?
+                        particles.filter(p => p.gv2FromCh1) : [];
+                    const parentPool = incomingParents.length ? incomingParents : particles;
+                    const parent = parentPool.length && gasTracersInitialized && !inlet ?
+                        parentPool[Math.floor(Math.random() * parentPool.length)] : null;
                     if (parent) {
                         tracer.x = Math.max(index + .003, Math.min(index + .997,
                             parent.x + (Math.random() - .5) * .018));
                         tracer.y = Math.max(.003, Math.min(.997,
                             parent.y + (Math.random() - .5) * .035));
+                        if (parent.gv2FromCh1) {
+                            tracer.gv2FromCh1 = true;
+                            tracer.species = parent.species;
+                        }
                     }
                     particles.push(tracer);
                 }
@@ -2436,7 +2487,7 @@ const dcLayerTargets = ['DC1_A', 'DC1_B', 'DC2_A', 'DC2_B'];
                                 const branchShare = 1 / (1 + .13 *
                                     Math.max(0, activeRpInlets() - 1));
                                 const pumpSpeed = pumps.RP1 ?
-                                    effectivePumpSpeed(gasPressure('ch1')) : 0;
+                                    ch1RoughingSpeed(gasPressure('ch1')) : 0;
                                 // More pumping capacity captures more of the
                                 // random encounters; Slow RV has a narrower
                                 // opening. No valve pulls CH dots toward it.
@@ -2484,6 +2535,7 @@ const dcLayerTargets = ['DC1_A', 'DC1_B', 'DC2_A', 'DC2_B'];
                                     for (const key of region) {
                                         gasMolecules[key] = 0;
                                         gasArgonMolecules[key] = 0;
+                                        gasOxygenMolecules[key] = 0;
                                     }
                                     gasMolecules[cp.toLowerCase()] += warmEntry;
                                 } else {
@@ -2532,6 +2584,15 @@ const dcLayerTargets = ['DC1_A', 'DC1_B', 'DC2_A', 'DC2_B'];
                     }
                     const destination = Math.max(0, Math.min(3, Math.floor(particle.x)));
                     if (destination !== index) {
+                        if (gv2VisualMix.active && index === 0 && destination > 0)
+                            particle.gv2FromCh1 = true;
+                        if (gv2VisualMix.active && particle.gv2FromCh1 &&
+                            destination > index) {
+                            for (let reached = index + 1; reached <= destination; reached++)
+                                gv2VisualMix.ready[reached] = true;
+                            if (gv2VisualMix.ready.every(Boolean))
+                                gv2VisualMix.active = false;
+                        }
                         // These chambers already share one molecular pool;
                         // moving a drawn sample across a dashed divider cannot
                         // change the pressure of that pool.
@@ -2652,6 +2713,8 @@ const dcLayerTargets = ['DC1_A', 'DC1_B', 'DC2_A', 'DC2_B'];
                 gasMolecules[flight.chamber] += flight.weight;
                 if (flight.species === 'Ar')
                     gasArgonMolecules[flight.chamber] += flight.weight;
+                if (flight.species === 'O2')
+                    gasOxygenMolecules[flight.chamber] += flight.weight;
                 const tracer = newGasTracer(flight.index);
                 tracer.x = flight.x;
                 tracer.y = .012;
@@ -2983,6 +3046,16 @@ const dcLayerTargets = ['DC1_A', 'DC1_B', 'DC2_A', 'DC2_B'];
                     }
                     sputterRemainder[id]--;
                     const tracer = nearbyAr[Math.floor(Math.random() * nearbyAr.length)];
+                    // One drawn dot stands for a very large packet of Ar. Only
+                    // a tiny fraction is ionized. Preserve its neutral packet
+                    // at the same position/velocity so DC animation does not
+                    // block a quarter of the samples from reaching the CP.
+                    // The ion travels separately until it hits the target;
+                    // neither operation creates or removes physical gas mass.
+                    const cloud = gasTracers[source.chamber];
+                    cloud[cloud.indexOf(tracer)] = {
+                        ...tracer, id: ++visualParticleId, ionTarget: null
+                    };
                     tracer.ionTarget = id;
                     const hitX = source.x + (Math.random() - .5) * .09;
                     ionImpacts.push({ target: id, tracer, x0: tracer.x,
@@ -3004,6 +3077,9 @@ const dcLayerTargets = ['DC1_A', 'DC1_B', 'DC2_A', 'DC2_B'];
                 ion.tracer.vy = .1 + Math.random() * .25;
                 ion.tracer.ionTarget = null;
                 if (ion.t >= 1 && plasmaOn) {
+                    if (ionNeutralFlights.length < 64)
+                        ionNeutralFlights.push({ x: ion.tracer.x, y: .405,
+                            vx: ion.tracer.vx, vy: ion.tracer.vy, life: .28 });
                     impactSparks.push({ x: ion.x1, target: ion.target, life: .3 });
                     for (let n = 0; n < 3 && sputterAtoms.length < 140; n++)
                         sputterAtoms.push({ target: ion.target, x: ion.x1 +
@@ -3012,6 +3088,13 @@ const dcLayerTargets = ['DC1_A', 'DC1_B', 'DC2_A', 'DC2_B'];
                             vy: .40 + Math.random() * .27 });
                 }
                 ionImpacts.splice(i, 1);
+            }
+            for (let i = ionNeutralFlights.length - 1; i >= 0; i--) {
+                const neutral = ionNeutralFlights[i];
+                neutral.x += neutral.vx * dt;
+                neutral.y += neutral.vy * dt;
+                neutral.life -= dt;
+                if (neutral.life <= 0) ionNeutralFlights.splice(i, 1);
             }
             for (let i = impactSparks.length - 1; i >= 0; i--) {
                 impactSparks[i].life -= dt;
@@ -3183,6 +3266,16 @@ const dcLayerTargets = ['DC1_A', 'DC1_B', 'DC2_A', 'DC2_B'];
                 ctx.fillStyle = '#e044ff';
                 ctx.beginPath(); ctx.arc(x, y, 3, 0, Math.PI * 2); ctx.fill();
             }
+            ctx.save();
+            ctx.fillStyle = gasColors.Ar;
+            for (const neutral of ionNeutralFlights) {
+                ctx.globalAlpha = Math.min(1, neutral.life / .13);
+                ctx.beginPath();
+                ctx.arc(vacuumX + secW * neutral.x,
+                    lineY + lineH * neutral.y, 1.55, 0, Math.PI * 2);
+                ctx.fill();
+            }
+            ctx.restore();
             for (const spark of impactSparks) {
                 const x = vacuumX + spark.x * secW;
                 const y = lineY + .405 * lineH;
@@ -3469,12 +3562,21 @@ const dcLayerTargets = ['DC1_A', 'DC1_B', 'DC2_A', 'DC2_B'];
             ctx.fillText(`${valStr}cc`, x + 3, y + 9);
         }
 
+        function bgInsideConfiguredLimits(key) {
+            const low = gaugeParameters[key + 'L'];
+            const high = gaugeParameters[key + 'H'];
+            return bgPressure[key] >= Math.min(low, high) &&
+                bgPressure[key] <= Math.max(low, high);
+        }
+
         function drawGauge(name, valStr, x, y, labelDx = 0, labelDy = -2) {
             ctx.fillStyle = '#000000';
             ctx.font = '9px Arial';
             ctx.fillText(name, x + labelDx, y + labelDy);
 
-            ctx.fillStyle = '#00ff00';
+            const bgKey = name === '1eBG1' ? 'bg1' : name === '1eBG2' ? 'bg2' : null;
+            ctx.fillStyle = name === '1eIG2' ||
+                (bgKey && bgInsideConfiguredLimits(bgKey)) ? '#ffff00' : '#00ff00';
             ctx.fillRect(x, y, 55, 12);
             ctx.strokeStyle = '#000000';
             ctx.strokeRect(x, y, 55, 12);
@@ -3497,20 +3599,40 @@ const dcLayerTargets = ['DC1_A', 'DC1_B', 'DC2_A', 'DC2_B'];
             ctx.restore();
             drawValve(valveId, x, valveY, valves[valveId], valveId, -29, 3, 'vertical');
             drawGauge(gaugeName, reading, x - 27.5, valveY - 50);
+            if (!valves[valveId]) {
+                ctx.fillStyle = '#4b5563';
+                ctx.font = '8px Arial';
+                ctx.fillText('隔離：保留值', x - 27, valveY - 25);
+            }
         }
 
-        function formatPressure(p) {
-            if (!Number.isFinite(p) || p <= 0) return '0.00E+00';
+        function formatPressure(p, decimals = 2) {
+            if (!Number.isFinite(p) || p <= 0) return `0.${'0'.repeat(decimals)}E+00`;
             let exponent = Math.floor(Math.log10(p));
             let mantissa = p / Math.pow(10, exponent);
-            // 四捨五入到 2 位有效數字；不能用截斷，否則 759.9 Torr 會被顯示成 7.59E+02，
-            // 造成大氣壓看起來永遠到不了 7.60E+02。
-            mantissa = Math.round((mantissa + Number.EPSILON) * 100) / 100;
+            // Gauge displays use one decimal; diagnostic text retains two.
+            // Round before adjusting the exponent so atmospheric pressure
+            // reaches 7.6E+02 instead of being truncated below 760 Torr.
+            const scale = Math.pow(10, decimals);
+            mantissa = Math.round((mantissa + Number.EPSILON) * scale) / scale;
             if (mantissa >= 10) {
-                mantissa = 1.00;
+                mantissa = 1;
                 exponent += 1;
             }
-            return `${mantissa.toFixed(2)}E${exponent < 0 ? '-' : '+'}${String(Math.abs(exponent)).padStart(2, '0')}`;
+            return `${mantissa.toFixed(decimals)}E${exponent < 0 ? '-' : '+'}${String(Math.abs(exponent)).padStart(2, '0')}`;
+        }
+
+        function formatGaugePressure(p) {
+            return formatPressure(p, 1);
+        }
+
+        function formatBgGaugePressure(p) {
+            // CDG025D nameplate: 1 Torr full scale. Datasheet's lowest
+            // reading is 0.01% full scale (1E-4 Torr). The controller's exact
+            // over/under-range text was not visible in the supplied photos.
+            if (p > 1) return '>1.0E+00';
+            if (p < 1e-4) return '<1.0E-04';
+            return formatGaugePressure(p);
         }
 
         function getBoosterInletSources() {
@@ -3571,7 +3693,7 @@ const dcLayerTargets = ['DC1_A', 'DC1_B', 'DC2_A', 'DC2_B'];
             const risks = [];
             // Compare exactly the nitrogen-equivalent number shown on CG2_1.
             // The physical chamber pressure still controls gas load and CP heating.
-            const cgDisplay = formatPressure(cgGaugePressure('ch2'));
+            const cgDisplay = formatGaugePressure(cgGaugePressure('ch2'));
             if (Number(cgDisplay) > vacuumParameters.cpCrossoverTorr)
                 risks.push(`CG2_1 ${cgDisplay} Torr 超過警示門檻 ${formatPressure(vacuumParameters.cpCrossoverTorr)} Torr`);
             for (const mv of activeMvs) {
@@ -3635,7 +3757,10 @@ const dcLayerTargets = ['DC1_A', 'DC1_B', 'DC2_A', 'DC2_B'];
             const value = Number(input.value);
             const limits = name === 'cpCrossoverTorr' ? [1e-6, 1] :
                 name === 'cgArgonResponse' ? [.1, 2] :
-                name === 'bgArgonResponse' ? [.05, 2] :
+                name === 'igArgonResponse' ? [.1, 3] :
+                name === 'rfCh1RvConductance' ? [.005, 1] :
+                name === 'bgCalibrationScale' ? [.05, 2] :
+                name === 'bgDisplayAverageSec' ? [0, 120] :
                 ['rpHighPressureGain', 'bpHighPressureGain'].includes(name) ? [1, 30] :
                 name === 'cpBasePressureTorr' ? [1e-7, .001] :
                 name === 'cpCapacityTorrL' ? [1, 1000000] :
@@ -3660,7 +3785,8 @@ const dcLayerTargets = ['DC1_A', 'DC1_B', 'DC2_A', 'DC2_B'];
             if (name.includes('GasLoad'))
                 input.value = value === 0 ? '0' : value.toExponential(2).replace('e', 'E');
             if (name === 'cpCrossoverTorr' || name === 'cgArgonResponse' ||
-                name === 'bgArgonResponse') {
+                name === 'igArgonResponse' || name === 'rfCh1RvConductance' ||
+                name === 'bgCalibrationScale' || name === 'bgDisplayAverageSec') {
                 updateVacuumModel(0);
                 syncMvWarning();
             }
@@ -3848,6 +3974,27 @@ const dcLayerTargets = ['DC1_A', 'DC1_B', 'DC2_A', 'DC2_B'];
                 key === 'ch1' ? ['ch1'] : ['ch2', 'ch3', 'ch4'];
         }
 
+        function detectGv2VisualMixing() {
+            if (valves.GV2 === gv2LastVisualState) return;
+            if (valves.GV2) {
+                const left = gasMolecules.ch1 / gasVolume('ch1');
+                const right = (gasMolecules.ch2 + gasMolecules.ch3 +
+                    gasMolecules.ch4) / (3 * gasVolume('ch1'));
+                // The gauges share one pressure as soon as GV2 connects the
+                // volumes. The visible, representative gas packets travel
+                // through the actual doorway rather than materializing in
+                // all four chambers on that same frame.
+                gv2VisualMix.active = left > right * 3 &&
+                    left > 1e-5 * MOLECULES_PER_TORR_L;
+                gv2VisualMix.ready = gv2VisualMix.active ?
+                    [true, false, false, false] : [true, true, true, true];
+            } else {
+                gv2VisualMix.active = false;
+                gv2VisualMix.ready = [true, true, true, true];
+            }
+            gv2LastVisualState = valves.GV2;
+        }
+
         function equilibrateChamberRegions() {
             const groups = valves.GV2 ?
                 [['ch1', 'ch2', 'ch3', 'ch4']] :
@@ -3857,19 +4004,26 @@ const dcLayerTargets = ['DC1_A', 'DC1_B', 'DC2_A', 'DC2_B'];
                 const total = members.reduce((sum, key) => sum + gasMolecules[key], 0);
                 const totalArgon = members.reduce((sum, key) =>
                     sum + gasArgonMolecules[key], 0);
+                const totalOxygen = members.reduce((sum, key) =>
+                    sum + gasOxygenMolecules[key], 0);
                 const volume = members.reduce((sum, key) => sum + gasVolume(key), 0);
                 let remaining = total;
                 let remainingArgon = totalArgon;
+                let remainingOxygen = totalOxygen;
                 for (let i = 0; i < members.length - 1; i++) {
                     const share = total * gasVolume(members[i]) / volume;
                     const argonShare = totalArgon * gasVolume(members[i]) / volume;
+                    const oxygenShare = totalOxygen * gasVolume(members[i]) / volume;
                     gasMolecules[members[i]] = share;
                     gasArgonMolecules[members[i]] = argonShare;
+                    gasOxygenMolecules[members[i]] = oxygenShare;
                     remaining -= share;
                     remainingArgon -= argonShare;
+                    remainingOxygen -= oxygenShare;
                 }
                 gasMolecules[members[members.length - 1]] = Math.max(0, remaining);
                 gasArgonMolecules[members[members.length - 1]] = Math.max(0, remainingArgon);
+                gasOxygenMolecules[members[members.length - 1]] = Math.max(0, remainingOxygen);
             }
         }
 
@@ -3888,7 +4042,7 @@ const dcLayerTargets = ['DC1_A', 'DC1_B', 'DC2_A', 'DC2_B'];
             const volume = region.reduce((sum, chamber) => sum + gasVolume(chamber), 0);
             const argonPartial = Math.min(pressure,
                 argon / (MOLECULES_PER_TORR_L * volume));
-            // One adjustable machine-specific nitrogen-equivalent CG response.
+            // An adjustable machine-specific nitrogen-equivalent gauge response.
             // At atmosphere the correction fades; the sensor has mostly air.
             const lowPressureWeight = 1 / (1 + pressure / .1);
             return Math.max(0, pressure - argonPartial * lowPressureWeight *
@@ -3899,11 +4053,19 @@ const dcLayerTargets = ['DC1_A', 'DC1_B', 'DC2_A', 'DC2_B'];
             return gasSensitiveGaugePressure(key, vacuumParameters.cgArgonResponse);
         }
 
+        function igGaugePressure(key) {
+            // The pictured large round IG2 is an AIM-type cold cathode gauge;
+            // its gas calibration must be independent of the Pirani CG value.
+            return gasSensitiveGaugePressure(key, vacuumParameters.igArgonResponse);
+        }
+
         function setGasPressure(key, pressure) {
             gasMolecules[key] = Math.max(0, pressure - MIN_PRESSURE_TORR) *
                 gasVolume(key) * MOLECULES_PER_TORR_L;
             if (key in gasArgonMolecules)
                 gasArgonMolecules[key] = gasMolecules[key] * atmosphereFractions.Ar;
+            if (key in gasOxygenMolecules)
+                gasOxygenMolecules[key] = gasMolecules[key] * atmosphereFractions.O2;
         }
 
         function admitGas(key, rate, dt, supplyPressure = ATM_PRESSURE_TORR) {
@@ -3916,6 +4078,8 @@ const dcLayerTargets = ['DC1_A', 'DC1_B', 'DC2_A', 'DC2_B'];
             gasMolecules[key] += admitted;
             if (key in gasArgonMolecules && key !== 'ch1')
                 gasArgonMolecules[key] += admitted * atmosphereFractions.Ar;
+            if (key in gasOxygenMolecules && key !== 'ch1')
+                gasOxygenMolecules[key] += admitted * atmosphereFractions.O2;
             return admitted;
         }
 
@@ -3932,6 +4096,7 @@ const dcLayerTargets = ['DC1_A', 'DC1_B', 'DC2_A', 'DC2_B'];
             if (entered > full * 1e-12) {
                 gasMolecules.ch1 += entered;
                 gasArgonMolecules.ch1 += entered * atmosphereFractions.Ar;
+                gasOxygenMolecules.ch1 += entered * atmosphereFractions.O2;
                 recordVentAdmission('GV1', entered);
             }
         }
@@ -3941,6 +4106,8 @@ const dcLayerTargets = ['DC1_A', 'DC1_B', 'DC2_A', 'DC2_B'];
             gasMolecules[key] += molecules;
             if (key in gasArgonMolecules)
                 gasArgonMolecules[key] += molecules * atmosphereFractions.Ar;
+            if (key in gasOxygenMolecules)
+                gasOxygenMolecules[key] += molecules * atmosphereFractions.O2;
         }
 
         // A finite conductance moves particles down the pressure gradient.
@@ -4304,22 +4471,37 @@ const dcLayerTargets = ['DC1_A', 'DC1_B', 'DC2_A', 'DC2_B'];
         }
 
         function bgProcessPressure(chamber) {
-            // BG samples the same chamber gas even after its Ar inlet closes.
-            // The default response is 1: the measured 3e-3 Torr process point
-            // instead calibrates effective CP throughput. A verified BG gauge
-            // response, when available, can be applied here without silently
-            // changing the underlying gas population or CG reading.
-            return gasSensitiveGaugePressure(chamber,
-                vacuumParameters.bgArgonResponse);
+            // CDG025D reads absolute total pressure regardless of Ar fraction.
+            // The optional scale represents controller calibration only; it
+            // never changes the chamber's actual molecule count.
+            return gasPressure(chamber) * vacuumParameters.bgCalibrationScale;
         }
 
         function updateBgProcessReadings(dt) {
             for (const [key, chamber, valve] of [
                 ['bg1', 'ch1', 'VB1'], ['bg2', 'ch2', 'VB2']
             ]) {
-                if (!valves[valve]) continue;
+                if (!valves[valve]) {
+                    bgValveWasOpen[key] = false;
+                    continue;
+                }
                 const target = bgProcessPressure(chamber);
-                const fraction = 1 - Math.exp(-Math.max(0, dt) / 1.8);
+                if (!bgValveWasOpen[key]) {
+                    // The sensing branch samples the chamber when VB opens;
+                    // the controller average must not carry an old air reading.
+                    bgPressure[key] = target;
+                    bgValveWasOpen[key] = true;
+                    continue;
+                }
+                // The sensor reacts within the fixed 50 ms physics step. This
+                // separate HMI average suppresses Monte Carlo fluctuations
+                // from a small set of representative visible gas molecules.
+                // Large real process changes bypass the average promptly.
+                const majorStep = target > bgPressure[key] * 2 ||
+                    target < bgPressure[key] / 2;
+                const tau = majorStep ? .25 : vacuumParameters.bgDisplayAverageSec;
+                const fraction = tau === 0 ? 1 :
+                    1 - Math.exp(-Math.max(0, dt) / tau);
                 bgPressure[key] += (target - bgPressure[key]) * fraction;
             }
         }
@@ -4332,6 +4514,7 @@ const dcLayerTargets = ['DC1_A', 'DC1_B', 'DC2_A', 'DC2_B'];
 
         function updateVacuumModel(dt) {
             dt = Math.max(0, Math.min(dt, 1));
+            detectGv2VisualMixing();
             vacuumTimeCarrySec += dt;
             const steps = dt === 0 ? 1 :
                 Math.floor((vacuumTimeCarrySec + 1e-9) / VACUUM_STEP_SEC);
@@ -4354,26 +4537,26 @@ const dcLayerTargets = ['DC1_A', 'DC1_B', 'DC2_A', 'DC2_B'];
             updateBgProcessReadings(steps * stepDt);
             updatePressureFloorPreview();
 
-            gauges.bg1 = formatPressure(bgPressure.bg1);
+            gauges.bg1 = formatBgGaugePressure(bgPressure.bg1);
             const cg1Actual = cgGaugePressure('ch1');
-            gauges.cg1 = formatPressure(Math.max(cg1Actual, LOW_VACUUM_DISPLAY_FLOOR_TORR));
-            gauges.bg2 = formatPressure(bgPressure.bg2);
+            gauges.cg1 = formatGaugePressure(Math.max(cg1Actual, LOW_VACUUM_DISPLAY_FLOOR_TORR));
+            gauges.bg2 = formatBgGaugePressure(bgPressure.bg2);
             const cg2Actual = cgGaugePressure('ch2');
             const ig2Active = cg2Actual <= LOW_VACUUM_DISPLAY_FLOOR_TORR;
+            const ig2Actual = igGaugePressure('ch2');
             cg2_1GaugeName = ig2Active ? '1eIG2' : '1eCG2_1';
-            gauges.cg2_1 = formatPressure(ig2Active ? cg2Actual : Math.max(cg2Actual, LOW_VACUUM_DISPLAY_FLOOR_TORR));
-            gauges.cg2_2 = formatPressure(Math.max(cpForelinePressure.ch2, LOW_VACUUM_DISPLAY_FLOOR_TORR));
-            gauges.cg3_2 = formatPressure(Math.max(cpForelinePressure.ch3, LOW_VACUUM_DISPLAY_FLOOR_TORR));
+            gauges.cg2_1 = formatGaugePressure(ig2Active ? ig2Actual : Math.max(cg2Actual, LOW_VACUUM_DISPLAY_FLOOR_TORR));
+            gauges.cg2_2 = formatGaugePressure(Math.max(cpForelinePressure.ch2, LOW_VACUUM_DISPLAY_FLOOR_TORR));
+            gauges.cg3_2 = formatGaugePressure(Math.max(cpForelinePressure.ch3, LOW_VACUUM_DISPLAY_FLOOR_TORR));
 
             // Keep the parameter-page actual-value cells synchronized with the
-            // same displayed gauges. IG2 uses exactly the CG2_1 pressure when
-            // the ion-gauge display is active.
+            // same displayed gauges. IG2 uses its own Ar response when active.
             const actualGaugeCells = {
                 'parameter-gauge-ch1': gauges.cg1,
                 'parameter-gauge-ch2': gauges.cg2_1,
                 'parameter-gauge-cp2': gauges.cg2_2,
                 'parameter-gauge-cp3': gauges.cg3_2,
-                'parameter-gauge-ig2': formatPressure(cg2Actual),
+                'parameter-gauge-ig2': formatGaugePressure(ig2Actual),
                 'parameter-gauge-bg1': gauges.bg1,
                 'parameter-gauge-bg2': gauges.bg2
             };
@@ -4386,7 +4569,7 @@ const dcLayerTargets = ['DC1_A', 'DC1_B', 'DC2_A', 'DC2_B'];
             const region = valves.GV2 ? 'CH1～CH4' : 'CH1';
             if (pumps.RP1 && (valves.RV1 || valves.Slow_RV)) {
                 const nominal = isBoosterEffective() ? vacuumParameters.bpSpeedLs : vacuumParameters.rpSpeedLs;
-                paths.push(`${isBoosterEffective() ? 'RP+BP' : 'RP'}→${region}：設定 ${nominal.toFixed(0)} L/s，模擬有效 ${effectivePumpSpeed(chamberPressure.ch1).toFixed(0)} L/s`);
+                paths.push(`${isBoosterEffective() ? 'RP+BP' : 'RP'}→${region}：設定 ${nominal.toFixed(0)} L/s，CH1 入口模擬有效 ${ch1RoughingSpeed(chamberPressure.ch1).toFixed(0)} L/s${!valves.GV2 && (valves.V1_1 || valves.V1_2) ? '（RF 進氣導通）' : ''}`);
             }
             for (const [cp, n] of [['CP2', '2'], ['CP3', '3']]) {
                 if (valves['MV' + n] && canCpAdsorb(cp)) paths.push(`${cp} 低溫吸附→${valves.GV2 ? 'CH1～CH4' : 'CH2～CH4'}`);
@@ -5079,11 +5262,12 @@ const dcLayerTargets = ['DC1_A', 'DC1_B', 'DC2_A', 'DC2_B'];
             document.getElementById('manual-speed-forward').textContent = manualConveyorSpeedMmSec;
             document.getElementById('manual-speed-reverse').textContent = manualConveyorSpeedMmSec;
             document.getElementById('auto-transit-speed-hint').textContent = autoTransitSpeedMmSec;
-            for (const [id, value] of [
-                ['ch1', cgGaugePressure('ch1')], ['ch2', cgGaugePressure('ch2')],
-                ['bg1', bgPressure.bg1], ['bg2', bgPressure.bg2],
-                ['cp2', cpForelinePressure.ch2], ['cp3', cpForelinePressure.ch3]
-            ]) document.getElementById(`parameter-gauge-${id}`).textContent = formatPressure(value);
+            for (const [id, display] of [
+                ['ch1', gauges.cg1], ['ch2', gauges.cg2_1],
+                ['bg1', gauges.bg1], ['bg2', gauges.bg2],
+                ['cp2', gauges.cg2_2], ['cp3', gauges.cg3_2],
+                ['ig2', formatGaugePressure(igGaugePressure('ch2'))]
+            ]) document.getElementById(`parameter-gauge-${id}`).textContent = display;
             document.getElementById('parameter-cp2-usage').textContent = cpState.CP2.usagePct.toFixed(1) + '%';
             document.getElementById('parameter-cp3-usage').textContent = cpState.CP3.usagePct.toFixed(1) + '%';
         }
@@ -5331,7 +5515,7 @@ const dcLayerTargets = ['DC1_A', 'DC1_B', 'DC2_A', 'DC2_B'];
                 if (bgAlarmActive[key]) {
                     bgAlarmElapsed[key] += dt;
                     if (bgAlarmElapsed[key] >= delay) {
-                        pauseAutoProcess(`${key.toUpperCase()} 壓力異常：${formatPressure(pressure)} Torr，已超過 ${delay} 秒`, false);
+                        pauseAutoProcess(`${key.toUpperCase()} 壓力異常：${formatBgGaugePressure(pressure)} Torr，已超過 ${delay} 秒`, false);
                         return;
                     }
                 }
@@ -5845,9 +6029,9 @@ const dcLayerTargets = ['DC1_A', 'DC1_B', 'DC2_A', 'DC2_B'];
                     return;
                 }
                 const ig2Target = gaugeParameters.ig2;
-                const cg2ForAuto = cgGaugePressure('ch2');
-                if (cg2ForAuto > ig2Target) {
-                    setAutoSummary(`${autoDelayGv2Sec} 秒抽氣延遲已完成；現在才檢查 IG2 真空鍍門檻 ${formatPressure(ig2Target)} Torr。目前 ${formatPressure(cg2ForAuto)} Torr，尚未達標，維持停止並繼續抽氣。`);
+                const ig2ForAuto = igGaugePressure('ch2');
+                if (ig2ForAuto > ig2Target) {
+                    setAutoSummary(`${autoDelayGv2Sec} 秒抽氣延遲已完成；現在才檢查 IG2 真空鍍門檻 ${formatPressure(ig2Target)} Torr。目前 ${formatPressure(ig2ForAuto)} Torr，尚未達標，維持停止並繼續抽氣。`);
                     return;
                 }
                 if (pumps.RP1) {
@@ -6843,6 +7027,8 @@ const dcLayerTargets = ['DC1_A', 'DC1_B', 'DC2_A', 'DC2_B'];
             chamberPressure.ch4 = ATM_PRESSURE_TORR;
             bgPressure.bg1 = ATM_PRESSURE_TORR;
             bgPressure.bg2 = ATM_PRESSURE_TORR;
+            bgValveWasOpen.bg1 = false;
+            bgValveWasOpen.bg2 = false;
             cpForelinePressure.ch2 = ATM_PRESSURE_TORR;
             cpForelinePressure.ch3 = ATM_PRESSURE_TORR;
             pumpLinePressure = ATM_PRESSURE_TORR;
@@ -6852,6 +7038,7 @@ const dcLayerTargets = ['DC1_A', 'DC1_B', 'DC2_A', 'DC2_B'];
             processGasFlights.length = 0;
             sputterAtoms.length = 0;
             ionImpacts.length = 0;
+            ionNeutralFlights.length = 0;
             impactSparks.length = 0;
             cleaningParticles.length = 0;
             cleaningDebris.length = 0;
@@ -6908,6 +7095,9 @@ const dcLayerTargets = ['DC1_A', 'DC1_B', 'DC2_A', 'DC2_B'];
             Object.keys(valves).forEach(k => valves[k] = false);
             Object.keys(targets).forEach(k => targets[k] = false);
             valves.GV2 = true;
+            gv2LastVisualState = valves.GV2;
+            gv2VisualMix.active = false;
+            gv2VisualMix.ready = [true, true, true, true];
             valves.MV2 = false; valves.MV3 = false;
             mvWarningArmed.MV2 = false; mvWarningArmed.MV3 = false;
             cryoPumps.CP2 = false; cryoPumps.CP3 = false;
