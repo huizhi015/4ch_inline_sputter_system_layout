@@ -158,6 +158,25 @@
         .power-sequence-badge { display:inline-flex; align-items:center; gap:4px; padding:2px 6px; border:1px solid #555; background:#e8e8e8; font-size:11px; font-weight:700; }
         .power-sequence-active { background:#fff2a8; border-color:#9b7b00; }
         #power-sequence-skip { white-space:nowrap; font-size:11px; padding:2px 7px; }
+        .system-editor-page { padding:8px; background:#c9c8bb; min-height:580px; }
+        .system-editor-toolbar { display:flex; flex-wrap:wrap; align-items:center; gap:6px; padding:6px 8px; background:#d4d0c8; border:2px groove #eeeede; margin-bottom:6px; }
+        .system-editor-toolbar .scada-button { padding:3px 10px; font-size:12px; }
+        .system-editor-toolbar select, .system-editor-toolbar input { box-sizing:border-box; height:26px; border:2px inset #e6e6d8; background:#fffef2; padding:2px 5px; }
+        .system-editor-help { color:#30352f; font-size:11px; line-height:1.5; padding:6px 8px; background:#efefdd; border:1px solid #777; margin-bottom:6px; }
+        .system-editor-list { display:grid; gap:6px; }
+        .system-editor-card { background:#d4d0c8; border:2px groove #eeeede; padding:7px 8px; }
+        .system-editor-card-head { display:flex; flex-wrap:wrap; align-items:center; gap:6px; margin-bottom:5px; }
+        .system-editor-index { display:inline-block; min-width:50px; padding:2px 5px; background:#1f4d7a; color:#fff; font-weight:900; text-align:center; }
+        .system-editor-key { font:11px 'Courier New',monospace; color:#555; background:#ecebe2; padding:2px 5px; }
+        .system-editor-anchor { font-size:11px; color:#713c32; font-weight:700; }
+        .system-editor-fields { display:grid; grid-template-columns:minmax(180px,.42fr) minmax(300px,1fr) minmax(250px,.7fr); gap:6px; }
+        .system-editor-field { display:flex; flex-direction:column; gap:3px; }
+        .system-editor-field label { font-size:11px; font-weight:900; color:#202c55; }
+        .system-editor-field input, .system-editor-field textarea { width:100%; box-sizing:border-box; border:2px inset #e6e6d8; background:#fffef2; color:#111; padding:5px; font:12px/1.45 'Segoe UI',Tahoma,sans-serif; resize:vertical; }
+        .system-editor-field textarea { min-height:74px; }
+        .system-editor-field input { min-height:30px; }
+        .system-editor-status { margin-left:auto; font-size:11px; font-weight:700; color:#14532d; }
+        @media(max-width:900px) { .system-editor-fields { grid-template-columns:1fr; } .system-editor-status { margin-left:0; width:100%; } }
         #power-sequence-skip:disabled { opacity:.5; cursor:default; }
         @keyframes tutorial-highlight { 50% { filter:brightness(1.5); } }
 
@@ -271,7 +290,7 @@
             <button onclick="showScadaPage('parameters')" class="px-1.5 py-0.5 hover:bg-blue-800 hover:text-white">參數(P)</button>
             <button onclick="blockOperation('「模式(M)」選單尚未開放，請直接使用主畫面下方的模式切換按鈕。')" title="教學模擬：尚未開放" class="px-1.5 py-0.5 hover:bg-blue-800 hover:text-white cursor-pointer">模式(M)</button>
             <button onclick="blockOperation('「統計(S)」選單尚未開放，僅供教學模擬展示。')" title="教學模擬：尚未開放" class="px-1.5 py-0.5 hover:bg-blue-800 hover:text-white cursor-pointer">統計(S)</button>
-            <button onclick="blockOperation('「系統(X)」選單尚未開放，僅供教學模擬展示。')" title="教學模擬：尚未開放" class="px-1.5 py-0.5 hover:bg-blue-800 hover:text-white cursor-pointer">系統(X)</button>
+            <button onclick="showScadaPage('system')" title="系統設定：教學說明文字管理、匯入／匯出設定" class="px-1.5 py-0.5 hover:bg-blue-800 hover:text-white cursor-pointer">系統(X)</button>
             <button onclick="blockOperation('「說明(H)」選單尚未開放，僅供教學模擬展示。')" title="教學模擬：尚未開放" class="px-1.5 py-0.5 hover:bg-blue-800 hover:text-white cursor-pointer">說明(H)</button>
             <span class="text-gray-400">|</span>
             <button id="tab-main" onclick="showScadaPage('main')" class="px-2 py-0.5 bg-gray-200 border border-gray-400 flex items-center gap-1 font-bold"><span class="w-2.5 h-2.5 rounded-full bg-green-500 inline-block border border-black"></span> 主畫面</button>
@@ -396,6 +415,32 @@
 
 
 </div>
+
+    <div id="system-page" class="hidden scada-window flex-1 system-editor-page my-0.5">
+        <div class="parameter-page-bar"><span>SYSTEM SETTING <small>系統設定／教學說明文字管理</small></span><button onclick="showScadaPage('main')" class="scada-button">返回主畫面</button></div>
+        <div class="system-editor-toolbar">
+            <label class="font-bold whitespace-nowrap">編輯類別
+                <select id="tutorial-editor-category" onchange="renderTutorialEditor()">
+                    <option value="power-startup">開機步驟 1～12</option>
+                    <option value="power-shutdown">關機步驟 1～12</option>
+                    <option value="auto-phase">自動流程</option>
+                    <option value="component">元件／操作教學</option>
+                </select>
+            </label>
+            <label class="font-bold whitespace-nowrap">搜尋 <input id="tutorial-editor-search" type="search" placeholder="搜尋設備、步驟或文字" oninput="renderTutorialEditor()" style="width:210px"></label>
+            <button type="button" class="scada-button" onclick="saveTutorialTextSettings()">儲存設定</button>
+            <button type="button" class="scada-button" onclick="exportTutorialTextSettings()">匯出設定</button>
+            <button type="button" class="scada-button" onclick="document.getElementById('tutorial-import-file').click()">匯入設定</button>
+            <button type="button" class="scada-button" onclick="resetTutorialTextSettings()">恢復內建文字</button>
+            <input id="tutorial-import-file" type="file" accept="application/json,.json" class="hidden" onchange="importTutorialTextSettings(this)">
+            <span id="tutorial-editor-status" class="system-editor-status">尚未修改</span>
+        </div>
+        <div class="system-editor-help">
+            <b>怎麼用：</b>選擇要編輯的流程後，直接修改「步驟名稱／標題」、「作用與原理」、「下一步」。修改會立即套用到教學模式；按「儲存設定」可留在本機瀏覽器，按「匯出設定」可把目前文字存成 JSON，換電腦或版本時再用「匯入設定」載回。<br>
+            <b>建議：</b>標題說清楚「現在做什麼」，作用與原理說清楚「為什麼」，下一步只交代「接下來做什麼」，讓第一次接觸的人能快速看懂。
+        </div>
+        <div id="tutorial-editor-list" class="system-editor-list"></div>
+    </div>
 
     <div id="main-panel" class="relative flex-1 scada-window p-2 my-0.5 bg-[#c0c0c0] flex flex-col justify-between overflow-hidden min-h-[580px]">
         
@@ -608,10 +653,10 @@
                 <button onclick="startupSystem()" class="scada-button px-3 py-1 text-xs text-green-900">
                     <i class="fa-solid fa-plug mr-1"></i>一鍵開機
                 </button>
-                <label class="power-sequence-badge" title="勾選：啟用教學提示，每個自動步驟會顯示目前作用、原理與下一步；未勾選：不顯示教學提示，一鍵開／關機可瞬間完成。自動模式本身仍保留步驟間隔，避免 Ar 與 DC 同時發生。">
+                <label class="power-sequence-badge" title="勾選：啟用教學模式；開機、關機與自動鍍膜都會顯示「現在做什麼、為什麼、下一步」。未勾選：隱藏教學提示。自動鍍膜的設備動作仍固定間隔 2 秒；一鍵開／關機則依逐步模式使用下方步驟間隔。">
                     <input id="chk-power-instant" type="checkbox"> 教學模式
                 </label>
-                <label class="power-sequence-badge" title="自動模式的相鄰設備動作至少間隔此秒數；教學模式另外顯示目前步驟提示。一鍵開／關機的逐步流程也使用此間隔。">
+                <label class="power-sequence-badge" title="只用於一鍵開機／關機的逐步流程；例如設定 5 秒，就是每個開／關機動作之間等待 5 秒。自動鍍膜的不同設備類型固定間隔 2 秒，不受此設定影響。">
                     步驟間隔 <input id="sequence-step-seconds" type="number" min="0.5" max="60" step="0.5" value="5" onchange="setSequenceStepInterval(this)" class="w-14 border border-gray-500 px-1 text-right"> 秒
                 </label>
             </div>
@@ -1157,30 +1202,30 @@ const dcLayerTargets = ['DC1_A', 'DC1_B', 'DC2_A', 'DC2_B'];
         }
 
         const powerSequenceGuides = {
-            'startup-rp': { anchor:'RP1', title:'開機／先啟動 RP1', body:'此時只啟動 RP1，FV 與 RV 保持關閉；待 RP1 運轉後才開始 CP 再生。', next:'下一步：接通 FV，進行 CP 再生。' },
-            'startup-regen': { anchor:'PURGE2', title:'CP2／CP3 再生', body:'最後一輪抽氣讓 CP 使用率回到 0% 後，只完成 FV／BP 的隔離；開機流程保留 RP1 運轉，下一步直接啟動 CP，不再重新抽一次前級。', next:'下一步：直接啟動 CP2／CP3 冷卻。' },
-            'startup-cp': { anchor:'CP2', title:'開機／先啟動 CP2、CP3', body:'確認 FV 關閉、CP 前級達標後啟動冷凍泵；降溫會與後續的四腔粗抽同時進行。', next:'下一步：準備門閥，再粗抽四腔。' },
-            'startup-prepare': { anchor:'GV2', title:'準備四腔與門閥', body:'CP 已啟動降溫；隔離大氣、關 GV1，確認 GV2 可以打開。', next:'下一步：開 RV1，粗抽四腔。' },
-            'startup-rv': { anchor:'RV1', title:'開機／RV1 粗抽四腔', body:'RV1 使四腔氣體經 RP1 排出；要等真空計實際降到 10 Torr 以下才啟動 BP。', next:'下一步：加上 BP1。' },
-            'startup-bp': { anchor:'BP1', title:'開機／啟動 BP1 加強粗抽', body:'四腔已低於 10 Torr，RP1 與 BP1 一起抽氣；CP 在這段期間持續降溫。', next:'下一步：等待 CP 與四腔都達到接通條件。' },
-            'startup-cp-ready': { anchor:'CP2', title:'開機／確認 CP 冷卻到位', body:'CP 已在粗抽前啟動；等 CP2／CP3 降到 20 K 以下，並確認四腔壓力已達接通門檻。', next:'下一步：隔離四腔的 RV 粗抽路徑。' },
-            'startup-rv-isolate': { anchor:'RV1', title:'開機／達 10K 後關閉 RV1', body:'RP1／BP1 持續抽氣，必須先把四腔抽到 10K（1.0E-5 Torr）才關閉 RV1；未達 10K 時保持 RV1 開啟繼續抽。', next:'下一步：關閉 BP1，接著開啟 MV2／MV3。' },
-            'startup-rv-bp-stop': { anchor:'BP1', title:'開機／關閉 BP1', body:'已達 MV 開啟標準並關閉 RV1；現在關閉 BP1，但 RP1 保持運轉。', next:'下一步：開啟 MV2／MV3。' },
-            'startup-mv': { anchor:'MV2', title:'開機／抽到 MV 接通標準並開啟 MV2、MV3', body:'BP 已停止，但 RP1 持續抽氣；必須持續抽到四腔壓力達到 MV 開啟標準，才接通冷凍泵。', next:'下一步：MV 開啟後，再利用接通空檔停止 RP1。' },
-            'startup-rp-stop': { anchor:'RP1', title:'開機／MV 接通後停止 RP1', body:'MV2、MV3 已開啟並由 CP 接手高真空抽氣；現在才停止 RP1，PV1 短暫回氣。', next:'下一步：確認四腔高真空待命。' },
-            'startup-ready': { anchor:'CP2', title:'開機完成／四腔高真空待命', body:'CP 與 MV 保持運轉，GV2 開、GV1 關，RV／FV／RP／BP 已關；可再關 GV2，切換自動模式。', next:'開機流程完成。' },
-            'shutdown-motors': { anchor:'GV1', title:'關機前檢查：傳動已停止', body:'確認載盤傳動與自動計時都已停止；若仍在運轉，流程先停止它們。' },
-            'shutdown-targets': { anchor:'DC1_A', title:'關機前檢查：靶材已關閉', body:'確認 RF 與四支 DC 靶都已關閉；若仍通電，流程先關閉它們。' },
-            'shutdown-gas': { anchor:'V2', title:'關機前檢查：製程進氣已關閉', body:'確認製程氣體及 VB／BG 支路已關閉；若仍開啟，流程先隔離它們。', next:'下一步：確認 GV1 已關閉。' },
-            'shutdown-gv1': { anchor:'GV1', title:'關機前檢查：GV1 已關閉', body:'確認載盤沒有跨門，且 GV1 已關閉到位；若仍開啟，流程先將它關閉。' },
-            'shutdown-gv2': { anchor:'GV2', title:'確認 GV2 開啟，可讓四腔破真空', body:'關機前檢查完成；必要時先讓兩側壓力接近，隔離 RV／FV／RP，再讓 GV2 開到位。' },
-            'shutdown-mv': { anchor:'MV2', title:'關閉 MV2／MV3', body:'先隔離兩台 CP，才可以對四腔破真空。' },
-            'shutdown-vent': { anchor:'Vent', title:'VENT 破四腔真空', body:'GV2 打開且 MV 關閉後，讓四腔回到大氣壓。' },
-            'shutdown-vent-isolate': { anchor:'Vent', title:'關閉 VENT', body:'四腔已回大氣，先關閉 Vent 與 Slow Vent。' },
-            'shutdown-fv-isolate': { anchor:'FV2', title:'隔離 CP 前級', body:'確保 FV2／FV3 關閉，再進行 CP 停機。' },
-            'shutdown-cp-stop': { anchor:'CP2', title:'關閉 CP2／CP3', body:'停止兩台 CP，與開 PURGE 分成不同步驟。' },
-            'shutdown-purge': { anchor:'PURGE2', title:'PURGE 回溫', body:'CP 已停止、FV 已隔離，現在打開 PURGE 充入氮氣使 CP 回到常溫。' },
-            'shutdown-done': { anchor:'CP2', title:'關機完成', body:'關閉 PURGE，CP 已回到常溫並標記待再生；累計片數歸零。' }
+            'startup-rp': { anchor:'RP1', title:'啟動 RP1', body:'先啟動 RP1 前級幫浦，建立基本抽氣能力。此時 RV1、FV2、FV3 都先保持關閉。', next:'下一步：RP1 運轉滿 5 秒後，進入 CP 再生。' },
+            'startup-regen': { anchor:'PURGE2', title:'CP2／CP3 自動再生', body:'依序進行 PURGE → FV／RP 抽氣，每輪結束都檢查 CP 真空度與使用率。第 3 輪若使用率回到 0%，關閉 FV／BP 後直接進入 CP 啟動，不重複抽氣。', next:'下一步：啟動 CP2／CP3，開始降溫。' },
+            'startup-cp': { anchor:'CP2', title:'啟動 CP2／CP3', body:'啟動兩台冷凍泵並開始降溫。CP 可以先獨立冷卻，這時 MV2／MV3 尚未接通也不影響降溫。', next:'下一步：確認 GV1 關閉、GV2 開啟到位。' },
+            'startup-prepare': { anchor:'GV2', title:'準備 GV1／GV2', body:'先把外部大氣側隔離：GV1 關閉，GV2 開啟到位，讓四腔進入封閉抽氣狀態。', next:'下一步：開啟 RV1，開始四腔粗抽。' },
+            'startup-rv': { anchor:'RV1', title:'開啟 RV1，開始粗抽', body:'RV1 把四腔接到 RP1 抽氣路徑，RP1 開始持續抽氣讓壓力下降。四腔低於 10 Torr 後才啟動 BP1。', next:'下一步：啟動 BP1，加強粗抽。' },
+            'startup-bp': { anchor:'BP1', title:'啟動 BP1，加強粗抽', body:'四腔已低於 10 Torr，現在加入 BP1 來提高低壓段的抽氣能力。RP1 仍持續運轉。', next:'下一步：等待 CP2／CP3 降到 20 K。' },
+            'startup-cp-ready': { anchor:'CP2', title:'等待 CP2／CP3 冷卻至 20 K', body:'CP2／CP3 持續降溫；同時 RP1、BP1 與 RV1 保持抽氣，讓四腔繼續往 10K 前進。', next:'下一步：四腔達到 10K 後，進入 RV1 關閉前等待。' },
+            'startup-rv-isolate': { anchor:'RV1', title:'達 10K，等待後關閉 RV1', body:'四腔必須先實際達到 10K（≤ 1.0E-5 Torr）。達標後再保持 RV1 開啟完整 5 秒，確保壓力穩定，才關閉 RV1。', next:'下一步：關閉 BP1；RP1 暫時保持運轉。' },
+            'startup-rv-bp-stop': { anchor:'BP1', title:'關閉 BP1', body:'RV1 已完成隔離，現在關閉 BP1。RP1 保持運轉，避免在 MV 開啟前失去前級抽氣。', next:'下一步：開啟 MV2／MV3，讓 CP 接通後段腔體。' },
+            'startup-mv': { anchor:'MV2', title:'開啟 MV2／MV3', body:'四腔已達 10K，現在開啟 MV2／MV3，將 CH2／CH3 分別接到 CP2／CP3。', next:'下一步：MV 到位後，停止 RP1。' },
+            'startup-rp-stop': { anchor:'RP1', title:'停止 RP1', body:'MV2／MV3 已接通，CP 開始接手高真空抽氣。現在才停止 RP1，並讓 PV1 短暫回氣。', next:'下一步：確認 CP 與 MV 維持運轉，完成開機。' },
+            'startup-ready': { anchor:'CP2', title:'開機完成，高真空待命', body:'CP2／CP3 與 MV2／MV3 保持運轉；RP1、BP1、RV1、FV2、FV3 均關閉，系統進入高真空待命。', next:'開機流程完成，可依需要切換到自動模式。' },
+            'shutdown-motors': { anchor:'GV1', title:'停止傳動', body:'先停止載盤傳動與自動計時，避免門閥或腔體狀態切換時仍有機械動作。', next:'下一步：關閉 RF 與 DC 靶材。' },
+            'shutdown-targets': { anchor:'DC1_A', title:'關閉 RF／DC 靶材', body:'先切斷所有製程功率，停止 RF 與四支 DC 靶材的電源輸出。', next:'下一步：關閉製程氣體與 BG 支路。' },
+            'shutdown-gas': { anchor:'V2', title:'關閉製程氣體', body:'關閉 V1.1、V1.2、V2、V3 以及 VB1、VB2，停止製程進氣。', next:'下一步：關閉 GV1，隔離外部大氣側。' },
+            'shutdown-gv1': { anchor:'GV1', title:'關閉 GV1', body:'確認載盤沒有跨門後關閉 GV1，把 CH1 與外部大氣側隔離。', next:'下一步：調整壓差並開啟 GV2，準備破真空。' },
+            'shutdown-gv2': { anchor:'GV2', title:'開啟 GV2，準備破真空', body:'先依壓差條件隔離 RV、FV、RP 等抽氣路徑，再讓 GV2 開啟到位，讓四腔可以進入後續破真空程序。', next:'下一步：關閉 MV2／MV3，先隔離兩台 CP。' },
+            'shutdown-mv': { anchor:'MV2', title:'關閉 MV2／MV3', body:'關閉兩個主隔離閥，讓 CP2／CP3 與四腔分離。', next:'下一步：用 Vent／Slow Vent 讓四腔回到大氣壓。' },
+            'shutdown-vent': { anchor:'Vent', title:'開啟 Vent／Slow Vent，破真空', body:'打開 Vent／Slow Vent，讓外部氣體進入四腔，壓力逐步回升到大氣壓附近。', next:'下一步：確認四腔回到大氣壓後，關閉 Vent／Slow Vent。' },
+            'shutdown-vent-isolate': { anchor:'Vent', title:'關閉 Vent／Slow Vent', body:'四腔已回到大氣壓，現在關閉 Vent 與 Slow Vent，停止破真空進氣。', next:'下一步：關閉 FV2／FV3，隔離 CP 前級。' },
+            'shutdown-fv-isolate': { anchor:'FV2', title:'關閉 FV2／FV3', body:'確認兩條 FV 前級支路關閉，讓 CP 與 RP1 的前級抽氣路徑完全隔離。', next:'下一步：關閉 CP2／CP3。' },
+            'shutdown-cp-stop': { anchor:'CP2', title:'關閉 CP2／CP3', body:'停止兩台冷凍泵，結束本次高真空運轉。', next:'下一步：開啟 PURGE2／PURGE3，讓 CP 回溫。' },
+            'shutdown-purge': { anchor:'PURGE2', title:'開啟 PURGE2／PURGE3，讓 CP 回溫', body:'CP 已停止，現在用 PURGE 充入氮氣，讓 CP 回到常溫並解除停機後的低溫狀態。', next:'下一步：回溫完成後關閉 PURGE。' },
+            'shutdown-done': { anchor:'CP2', title:'關閉 PURGE，關機完成', body:'PURGE 關閉，CP 已回到常溫並標記待再生；本次關機完成。', next:'關機流程完成。' }
         };
 
         const tutorialGuides = {
@@ -1327,36 +1372,270 @@ const dcLayerTargets = ['DC1_A', 'DC1_B', 'DC2_A', 'DC2_B'];
         };
 
         const autoPhaseTutorials = {
-            'waiting-vent': { anchor:'Slow', title:'CH1 破真空／等待開門條件', body:'現在先用 Vent／Slow Vent 將 CH1 壓力拉回接近大氣壓。門閥 GV1 不能在腔體仍處於真空時直接開啟，必須先完成壓差條件確認。', next:'下一步：壓力到達開門條件後，GV1 才會開啟，載盤才能進入 CH1。' },
-            'gate-opening-load': { anchor:'GV1', title:'GV1 開門：建立進料通道', body:'GV1 正在動作。這是外部大氣側與 CH1 之間的進出料門，門閥到位後才能讓載盤跨越門區；此時不是在抽真空。', next:'下一步：GV1 到位後，平台／CH1 傳動才會開始。' },
-            'loading': { anchor:'GV1', title:'載盤進料：CH1 進料區', body:'GV1 已開啟，載盤正在由平台送入 CH1。此時保持進料通道開啟，避免載盤與門閥干涉。', next:'下一步：載盤到位後關閉 GV1，再重新建立 CH1 真空。' },
-            'gate-closing-load': { anchor:'GV1', title:'GV1 關閉：隔離外部大氣', body:'載盤已進入 CH1，現在關閉 GV1，把 CH1 與外部大氣側隔離。門閥確認關到位後，才進入正式抽氣流程。', next:'下一步：啟動 RP1 前級 PUMP，準備抽氣。' },
-            'rp-starting': { anchor:'RP1', title:'RP1 ON：啟動前級 PUMP', body:'RP1 前級幫浦正在建立抽氣能力。這一步只是讓 PUMP 運轉；CH1 尚未由 RV1 完整接通，因此目前不是直接把 CH1 抽到低真空。', next:'下一步：開啟 RV1，建立 CH1 → RV1 → RP1 的抽氣路徑。' },
-            'roughing': { anchor:'RV1', title:'RV1 OPEN：CH1 開始粗抽', body:'RV1 已開啟，CH1 與 RP1 抽氣管路連通。氣體由 CH1 流向抽氣管路，RP1 持續移除氣體，CH1 壓力開始下降。Slow RV 是較細管徑的 RV，作用相同但抽氣能力較小。', next:'下一步：持續粗抽，直到達到 RF／GV2 所需的壓力條件。' },
-            'roughing-bp': { anchor:'BP1', title:'BP1 ON：加強 CH1 抽氣', body:'CH1 與 RP 管路已低於 10 Torr，現在啟動 BP1。RV1 保持開啟，由 RP1／BP1 一起加強 CH1 的抽氣。', next:'下一步：CH1 達到前段真空門檻後，再依設定進行 RF 清潔或準備 GV2。' },
-            'rf-gas-stabilize': { anchor:'V1_1', title:'RF 清潔氣體：Ar／O₂ 進氣與壓力穩定', body:'現在依 RF 設定開啟選定氣體。Ar 提供電漿工作氣體；若啟用 O₂，則加入反應性氧氣。MFC 控制設定流量，抽氣端同時維持製程壓力。', next:'下一步：壓力進入 RF 啟動範圍後，RF 電源建立電漿。' },
-            'rf-cleaning': { anchor:'RF', title:'RF ON：電漿清潔／離子轟擊', body:'RF 電源在低壓氣體中建立高頻電場，使 Ar 電子碰撞游離形成 Ar⁺。正離子在電場與陰極鞘層作用下加速轟擊表面，將污染物與殘留膜層以離子轟擊方式去除。', next:'下一步：清潔計時完成後關閉 RF 與清潔氣體，準備進入鍍膜段。' },
-            'prepare-gv2': { anchor:'GV2', title:'準備 GV2：確認後段抽氣條件', body:'CH1 已完成前段抽氣／RF 清潔。現在準備隔離前段粗抽路徑並讓 GV2 建立 CH1 與後段腔體的連通。', next:'下一步：GV2 開啟後，先完整等待「GV2 開啟抽氣延遲」，即使 IG2 立即達標也不能提前傳動。' },
-            'gate-opening-process': { anchor:'GV2', title:'GV2 OPEN：連通後段腔體', body:'GV2 正在開啟。開啟後 CH1、CH2 以及後段連通區的真空系統開始形成共同抽氣空間；在 GV2 開啟狀態下，CG2_1 視為整個連通腔體的真空度。', next:'下一步：GV2 到位後先等待設定的抽氣延遲，再確認 IG2 達到 8.0E-05 Torr 等鍍膜要求。' },
-            'sputter-pump-stopping': { anchor:'RP1', title:'隔離粗抽管路：停止 RP／BP', body:'GV2 已開啟、鍍膜真空達標；先停止與腔體隔離的前級幫浦，等待 RP 停機及 PV 管路回氣完成，再接通鍍膜 Ar。', next:'下一步：開 V2／V3 與 VB2，建立 Ar 鍍膜氣氛。' },
-            'sputter-gas-stabilize': { anchor:'V2', title:'V2／V3 Ar 進氣：先建立鍍膜氣氛', body:'GV2 已開啟。現在一起開啟 CH2 的 V2、CH3 的 V3 與 BG 支路 VB2，依本層 MFC2／MFC3 流量供 Ar；先等待設定的步驟間隔，DC 靶才會通電，讓進氣與點靶分開顯示。', next:'下一步：依靶位定位載盤，或啟動本層 DC 靶並等待 Delay Time。' },
-            'sputter-dc-stabilize': { anchor:'DC1_A', title:'鍍膜／啟動 DC', body:'Ar／VB2 已先建立；現在才啟動本層 DC，並再保留一個步驟間隔，避免點靶與傳動同時發生。', next:'下一步：等待步驟間隔後開始傳動或進入設定的 Layer Delay。' },
-            'positioning': { anchor:'V2', title:'CH2 定位：前往 CH3 靶起點', body:'Ar 已經接通 V2／V3；本層只有 CH3 靶時，先讓載盤移到 CH2 起點。定位完成並滿足步驟間隔後，才依設定啟動 DC 靶。', next:'下一步：依 Layer 設定啟動 DC2-A／DC2-B。' },
-            'coating': { anchor:'DC1_A', title:'DC 通電濺鍍：Ar⁺ 轟擊金屬靶材', body:'DC 靶材接上負電位後，電子使 Ar 原子游離形成 Ar⁺；Ar⁺ 受陰極電場／鞘層作用加速，轟擊負偏壓的金屬靶材表面。離子動量傳遞使靶原子逸出，形成濺射原子通量並在載盤表面沉積成膜。', next:'下一步：載盤通過對應靶位並依 Layer 的功率、速度與趟數完成膜厚累積。' },
-            'gate-closing-return': { anchor:'GV2', title:'GV2 CLOSE：隔離後段製程腔體', body:'鍍膜完成後先關閉 GV2，將 CH1 與後段製程腔體隔離。確認門閥到位後，才進入回料／破真空程序。', next:'下一步：停止抽氣設備與製程氣體，再依序破真空與開 GV1。' },
-            'rp-stopping': { anchor:'RP1', title:'RP1 STOP：結束前級抽氣', body:'後段腔體已隔離，現在依序關閉 RV／FV／BP 等抽氣支路，再讓 RP1 完成停機。這可避免幫浦在不正確的閥位下持續抽氣。', next:'下一步：CH1 依序進行破真空，準備開啟 GV1。' },
-            'vent-out': { anchor:'Vent', title:'Vent／Slow Vent：CH1 破真空', body:'外部氣體經 Vent／Slow Vent 進入 CH1，使腔體壓力由真空逐步回升。Slow Vent 為較細管徑，可用於較平順的升壓。', next:'下一步：壓力達到 GV1 開門條件後，才允許 GV1 開啟。' },
-            'gate-opening-unload': { anchor:'GV1', title:'GV1 OPEN：準備出料', body:'CH1 已回到允許開門的壓力範圍，GV1 現在開啟，建立載盤返回外部平台的通道。', next:'下一步：門閥到位後，載盤反轉退出 CH1。' },
-            'unloading': { anchor:'GV1', title:'載盤出料：返回平台', body:'GV1 保持開啟，載盤沿傳動方向返回外部平台。完成後 GV1 關閉，流程回到待命狀態。', next:'下一步：關閉 GV1，完成本片流程並準備下一片。' },
-            'layer-delay': { anchor:'DC1_A', title:'鍍膜前等待：Layer / 趟次參數確認', body:'目前已完成前置真空與製程條件，先依本層的 Delay Time 等待。此時間不是抽氣延遲，而是 Layer 製程開始前的設定等待；等待完成後才啟動載盤傳動與靶材通電。', next:'下一步：依本層選定靶材與功率開始第 1 趟鍍膜。' },
-            'layer-positioning': { anchor:'V2', title:'換層定位：載盤回 CH1 後重新定位', body:'上一層完成後，載盤先退回 CH1 的安全位置，再依下一層設定決定起始區段。這一步是在換層，不是在重新進料；門閥與真空狀態仍維持製程隔離。', next:'下一步：定位完成後進入下一層 Delay Time 或直接開始鍍膜。' },
-            'pass-reverse-wait': { anchor:'DC1_A', title:'單趟完成：等待反轉條件', body:'載盤已完成本趟指定鍍膜區段。現在先確認馬達停止、靶材狀態與趟次條件，再決定是否反轉進行下一趟。', next:'下一步：條件確認後反轉載盤，讓相同靶區再次完成設定趟次。' },
-            'return-motor-wait': { anchor:'GV2', title:'返回前等待：確認傳動安全', body:'載盤已到達目前趟次的終點，正在等待傳動完全停止與位置條件確認。這個短暫等待是避免在門閥／腔體狀態切換時仍有載盤運動。', next:'下一步：確認位置後執行下一趟或返回 CH1。' },
-            'layer-return-ch1': { anchor:'GV2', title:'本層完成：載盤返回 CH1', body:'本層所有設定趟次已完成，載盤正在返回 CH1。返回的目的是讓下一層可以重新套用 Layer 設定，也讓流程在安全位置完成層間切換。', next:'下一步：回到 CH1 後依下一層設定重新定位與鍍膜。' },
-            'return-ch1': { anchor:'GV2', title:'鍍膜區返回 CH1', body:'目前正在把載盤由後段製程區返回 CH1。GV2 仍負責腔體區域的隔離條件；只有位置與傳動完全停止後，才進入後續關門／破真空流程。', next:'下一步：載盤回到 CH1 後關閉 GV2，開始出料前的隔離與破真空。' },
-            'next-layer-wait': { anchor:'DC1_A', title:'層間等待：準備下一 Layer', body:'上一層已完成，現在保留設定的層間等待時間。此時不代表機器故障，而是讓操作者能清楚看到「上一層完成 → 下一層開始」的分界。', next:'下一步：套用下一層的靶材、功率、速度、Ar 流量與趟次設定。' },
-            'gate-closing-finish': { anchor:'GV1', title:'GV1 CLOSE：完成出料隔離', body:'載盤已完全退出 CH1，現在關閉 GV1，把 CH1 與外部大氣側重新隔離。門閥到位後，自動流程回到待命狀態。', next:'下一步：本片流程完成，累計次數增加，可重新啟動下一片。' }
+            'waiting-vent': { anchor:'Slow', title:'等待 CH1 達開門壓力', body:'先用 Vent／Slow Vent 把 CH1 拉回接近大氣壓，必須先滿足壓差條件才能開 GV1。', next:'下一步：壓力達開門條件後開啟 GV1。' },
+            'gate-opening-load': { anchor:'GV1', title:'開啟 GV1，準備進料', body:'GV1 正在開啟，這是外部平台與 CH1 之間的進出料門。門閥到位前不能讓載盤跨門。', next:'下一步：GV1 到位後，開始載盤進料。' },
+            'loading': { anchor:'GV1', title:'載盤進料', body:'GV1 已開啟，載盤由外部平台進入 CH1。此時保持門閥與傳動狀態穩定。', next:'下一步：載盤到位後關閉 GV1。' },
+            'gate-closing-load': { anchor:'GV1', title:'關閉 GV1，隔離大氣', body:'載盤已進入 CH1，關閉 GV1 將 CH1 與外部大氣側隔離。', next:'下一步：啟動 RP1，準備抽氣。' },
+            'rp-starting': { anchor:'RP1', title:'啟動 RP1', body:'先讓 RP1 前級幫浦建立抽氣能力；這一步只是啟動幫浦，尚未由 RV1 抽 CH1。', next:'下一步：開啟 RV1，連通 CH1 與 RP1。' },
+            'roughing': { anchor:'RV1', title:'開啟 RV1，開始粗抽', body:'RV1 已開啟，CH1 與 RP1 抽氣路徑連通，CH1 壓力開始下降。Slow RV 是較細的慢抽路徑。', next:'下一步：低於 10 Torr 後啟動 BP1。' },
+            'roughing-bp': { anchor:'BP1', title:'啟動 BP1，加強粗抽', body:'CH1 與 RP 抽氣管路已低於 10 Torr，加入 BP1 提高粗抽能力；RV1 維持開啟。', next:'下一步：繼續抽到 RF／GV2 所需的低壓條件。' },
+            'rf-gas-stabilize': { anchor:'V1_1', title:'開啟 RF 清潔氣體', body:'依設定開啟 V1.1 Ar；若啟用 O₂，再開 V1.2。MFC 控制進氣量，抽氣端同時維持壓力。', next:'下一步：壓力穩定後啟動 RF。' },
+            'rf-cleaning': { anchor:'RF', title:'啟動 RF，進行腔體清潔', body:'RF 在低壓氣體中建立電漿，利用離子轟擊去除腔體表面的污染與殘留膜層。', next:'下一步：清潔時間完成後關閉 RF 與清潔氣體。' },
+            'prepare-gv2': { anchor:'GV2', title:'準備開啟 GV2', body:'前段抽氣／RF 清潔完成後，先確認 CH1、CH2 壓力條件與 RP 抽氣狀態。', next:'下一步：開啟 GV2，連通後段腔體。' },
+            'gate-opening-process': { anchor:'GV2', title:'開啟 GV2，連通製程腔體', body:'GV2 到位後，CH1 與後段腔體建立連通；此時 CG2_1 代表整個連通腔體的真空度。', next:'下一步：先完成 GV2 開啟抽氣延遲，再確認 IG2 製程門檻。' },
+            'sputter-pump-stopping': { anchor:'RP1', title:'停止 RP1，隔離粗抽', body:'鍍膜前先把前級粗抽路徑與腔體隔離，停止 RP1 並等待 PV1 回氣完成。', next:'下一步：開啟 V2／V3／VB2，建立 Ar 鍍膜氣氛。' },
+            'sputter-gas-stabilize': { anchor:'V2', title:'開啟 V2／V3／VB2，建立 Ar 氣氛', body:'V2、V3 與 VB2 可一起開啟，依 Layer 的 MFC2／MFC3 流量供應 Ar。不同設備類型之間保留 2 秒間隔，再進行下一個動作。', next:'下一步：依靶位定位載盤，或啟動本層 DC。' },
+            'sputter-dc-stabilize': { anchor:'DC1_A', title:'啟動 DC 靶', body:'Ar 氣氛已建立，現在才啟動本層選定的 DC 靶材。DC 與前面的進氣動作分開，並再保留 2 秒後才進入下一個設備動作。', next:'下一步：等待 Layer Delay 或開始載盤傳動。' },
+            'positioning': { anchor:'V2', title:'載盤定位到 CH2', body:'本層只有 CH3 靶時，先把載盤移到 CH2 起點；到位並完成步驟間隔後才啟動 DC2-A／DC2-B。', next:'下一步：啟動本層 DC 靶。' },
+            'coating': { anchor:'DC1_A', title:'DC 通電，開始濺鍍', body:'DC 建立 Ar⁺ 電漿，Ar⁺ 轟擊金屬靶材使靶原子逸出，並沉積到移動中的載盤表面。', next:'下一步：依 Layer 的功率、速度與趟數完成膜厚累積。' },
+            'gate-closing-return': { anchor:'GV2', title:'關閉 GV2，隔離後段腔體', body:'鍍膜完成後關閉 GV2，將 CH1 與後段製程腔體隔離，準備進入回料與破真空程序。', next:'下一步：停止前級抽氣，再進行破真空。' },
+            'rp-stopping': { anchor:'RP1', title:'停止 RP1，結束前級抽氣', body:'後段腔體已隔離，依序關閉 RV／FV／BP 等前級支路，再讓 RP1 完成停機。', next:'下一步：開啟 Vent／Slow Vent，讓 CH1 回大氣。' },
+            'vent-out': { anchor:'Vent', title:'開啟 Vent／Slow Vent，破真空', body:'Vent／Slow Vent 讓外部氣體進入 CH1，使壓力由真空逐步回到開門範圍。', next:'下一步：達到開門條件後開啟 GV1。' },
+            'gate-opening-unload': { anchor:'GV1', title:'開啟 GV1，準備出料', body:'CH1 已達允許開門的壓力範圍，GV1 開啟後建立載盤返回平台的通道。', next:'下一步：GV1 到位後，載盤退出 CH1。' },
+            'unloading': { anchor:'GV1', title:'載盤出料', body:'GV1 保持開啟，載盤返回外部平台；離開 CH1 後再關閉 GV1。', next:'下一步：關閉 GV1，完成本片流程。' },
+            'layer-delay': { anchor:'DC1_A', title:'等待 Layer Delay', body:'真空與製程條件已完成，現在依本層設定等待 Delay Time。這是製程等待，不是抽氣延遲。', next:'下一步：啟動本層 DC 與載盤傳動，開始第 1 趟。' },
+            'layer-positioning': { anchor:'V2', title:'換層定位', body:'上一層完成後，載盤先返回 CH1，再依下一層設定重新選擇鍍膜起始區段。', next:'下一步：完成定位後進入下一層 Delay Time。' },
+            'pass-reverse-wait': { anchor:'DC1_A', title:'等待反轉條件', body:'本趟已完成，先確認馬達停止與趟次條件，再反轉載盤。', next:'下一步：反向進行下一趟。' },
+            'return-motor-wait': { anchor:'GV2', title:'等待傳動停止', body:'載盤已到趟次終點，先等傳動完全停止，再進行下一個位置或門閥動作。', next:'下一步：依趟次條件繼續下一趟或返回 CH1。' },
+            'layer-return-ch1': { anchor:'GV2', title:'載盤返回 CH1', body:'本層趟次已完成，載盤返回 CH1 的安全位置，準備換層。', next:'下一步：套用下一 Layer 設定。' },
+            'return-ch1': { anchor:'GV2', title:'鍍膜區返回 CH1', body:'載盤由後段製程區返回 CH1，只有傳動完全停止後才進入後續隔離與破真空。', next:'下一步：關閉 GV2，開始出料流程。' },
+            'next-layer-wait': { anchor:'DC1_A', title:'等待下一 Layer', body:'上一層已完成，保留層間等待時間，讓操作者清楚看到層與層之間的分界。', next:'下一步：套用下一 Layer 的靶材、功率、速度、Ar 流量與趟次設定。' },
+            'gate-closing-finish': { anchor:'GV1', title:'關閉 GV1，完成出料隔離', body:'載盤已完全退出 CH1，關閉 GV1 將 CH1 與外部大氣側重新隔離。', next:'本片流程完成，可開始下一片。' }
         };
+
+        const tutorialTextDefaults = (() => {
+            const clone = (source) => Object.fromEntries(Object.entries(source).map(([key, item]) => [key, {
+                anchor: item.anchor || '',
+                title: item.title || '',
+                body: item.body || '',
+                next: item.next || ''
+            }]));
+            return {
+                power: clone(powerSequenceGuides),
+                auto: clone(autoPhaseTutorials),
+                component: clone(tutorialGuides)
+            };
+        })();
+
+        let tutorialEditorDirty = false;
+        const TUTORIAL_TEXT_STORAGE_KEY = '4ch_ckt_sputter_tutorial_text_settings_v1';
+
+        const tutorialEditorCategories = {
+            'power-startup': { label:'開機步驟', source:'power', keys: () => powerSequenceStepKeys('startup') },
+            'power-shutdown': { label:'關機步驟', source:'power', keys: () => powerSequenceStepKeys('shutdown') },
+            'auto-phase': { label:'自動流程', source:'auto', keys: () => Object.keys(autoPhaseTutorials) },
+            'component': { label:'元件／操作教學', source:'component', keys: () => Object.keys(tutorialGuides) }
+        };
+
+        function tutorialEditorStatus(message, good = true) {
+            const el = document.getElementById('tutorial-editor-status');
+            if (!el) return;
+            el.textContent = message;
+            el.style.color = good ? '#14532d' : '#991b1b';
+        }
+
+        function tutorialEditorSourceItem(source, key) {
+            const map = source === 'power' ? powerSequenceGuides :
+                source === 'auto' ? autoPhaseTutorials : tutorialGuides;
+            return map[key];
+        }
+
+        function tutorialEditorInputChanged(source, key, field, value) {
+            const item = tutorialEditorSourceItem(source, key);
+            if (!item) return;
+            item[field] = String(value);
+            tutorialEditorDirty = true;
+            tutorialEditorStatus('已修改，尚未儲存', true);
+        }
+
+        function renderTutorialEditor() {
+            const list = document.getElementById('tutorial-editor-list');
+            if (!list) return;
+            const categoryKey = document.getElementById('tutorial-editor-category')?.value || 'power-startup';
+            const search = (document.getElementById('tutorial-editor-search')?.value || '').trim().toLowerCase();
+            const category = tutorialEditorCategories[categoryKey];
+            if (!category) return;
+            const keys = category.keys();
+            const filtered = keys.filter((key) => {
+                const item = tutorialEditorSourceItem(category.source, key) || {};
+                if (!search) return true;
+                return [key, item.anchor, item.title, item.body, item.next].some(v =>
+                    String(v || '').toLowerCase().includes(search));
+            });
+
+            list.innerHTML = '';
+            if (!filtered.length) {
+                list.innerHTML = '<div class="system-editor-card font-bold">找不到符合搜尋條件的內容。</div>';
+                return;
+            }
+            filtered.forEach((key, index) => {
+                const item = tutorialEditorSourceItem(category.source, key);
+                const card = document.createElement('section');
+                card.className = 'system-editor-card';
+                const globalIndex = keys.indexOf(key) + 1;
+                card.innerHTML = `
+                    <div class="system-editor-card-head">
+                        <span class="system-editor-index">${category.label} ${globalIndex}</span>
+                        <span class="system-editor-key">${escapeHtmlForEditor(key)}</span>
+                        <span class="system-editor-anchor">畫面指向：${escapeHtmlForEditor(item.anchor || '—')}</span>
+                    </div>
+                    <div class="system-editor-fields">
+                        <div class="system-editor-field">
+                            <label>步驟名稱／標題</label>
+                            <input data-field="title" type="text" value="${escapeAttrForEditor(item.title)}">
+                        </div>
+                        <div class="system-editor-field">
+                            <label>作用與原理說明</label>
+                            <textarea data-field="body">${escapeHtmlForEditor(item.body)}</textarea>
+                        </div>
+                        <div class="system-editor-field">
+                            <label>下一步</label>
+                            <textarea data-field="next">${escapeHtmlForEditor(item.next)}</textarea>
+                        </div>
+                    </div>`;
+                for (const input of card.querySelectorAll('[data-field]')) {
+                    input.addEventListener('input', () =>
+                        tutorialEditorInputChanged(category.source, key, input.dataset.field, input.value));
+                    input.addEventListener('change', () => saveTutorialTextSettings(false));
+                }
+                list.appendChild(card);
+            });
+            if (tutorialEditorDirty) tutorialEditorStatus('已修改，尚未儲存', true);
+        }
+
+        function escapeHtmlForEditor(value) {
+            return String(value ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+        }
+
+        function escapeAttrForEditor(value) {
+            return escapeHtmlForEditor(value).replace(/'/g,'&#39;').replace(/\n/g,'&#10;');
+        }
+
+        function collectTutorialTextSettings() {
+            const pack = (source) => Object.fromEntries(Object.entries(source).map(([key, item]) => [key, {
+                title: item.title || '', body: item.body || '', next: item.next || '', anchor: item.anchor || ''
+            }]));
+            return {
+                format: '4CH_CKT_TUTORIAL_TEXT_SETTINGS',
+                version: 1,
+                exportedAt: new Date().toISOString(),
+                power: pack(powerSequenceGuides),
+                auto: pack(autoPhaseTutorials),
+                component: pack(tutorialGuides)
+            };
+        }
+
+        function applyTutorialTextSettings(data) {
+            if (!data || data.format !== '4CH_CKT_TUTORIAL_TEXT_SETTINGS')
+                throw new Error('不是本系統的教學文字設定檔。');
+            const groups = [
+                ['power', powerSequenceGuides],
+                ['auto', autoPhaseTutorials],
+                ['component', tutorialGuides]
+            ];
+            for (const [groupName, targetMap] of groups) {
+                const incoming = data[groupName];
+                if (!incoming || typeof incoming !== 'object') continue;
+                for (const key of Object.keys(targetMap)) {
+                    if (!incoming[key] || typeof incoming[key] !== 'object') continue;
+                    for (const field of ['title','body','next']) {
+                        if (typeof incoming[key][field] === 'string') targetMap[key][field] = incoming[key][field];
+                    }
+                }
+            }
+            tutorialEditorDirty = false;
+            localStorage.setItem(TUTORIAL_TEXT_STORAGE_KEY, JSON.stringify(collectTutorialTextSettings()));
+            tutorialEditorStatus('設定已匯入並套用', true);
+            renderTutorialEditor();
+            // 重新顯示目前教學卡時會讀取剛更新的物件。
+            if (powerSequence.active) {
+                const key = powerSequenceStepKeys(powerSequence.mode)[powerSequence.step];
+                showPowerSequenceGuide(key, `${powerSequence.mode === 'startup' ? '開機' : '關機'}：步驟 ${powerSequence.step + 1}/${powerSequenceStepKeys(powerSequence.mode).length}`);
+            } else if (isAutoRunning) {
+                showAutoPhaseGuide(autoPhase);
+            }
+        }
+
+        function saveTutorialTextSettings(showMessage = true) {
+            try {
+                localStorage.setItem(TUTORIAL_TEXT_STORAGE_KEY, JSON.stringify(collectTutorialTextSettings()));
+                tutorialEditorDirty = false;
+                if (showMessage) tutorialEditorStatus('已儲存到本機瀏覽器', true);
+            } catch (error) {
+                tutorialEditorStatus('儲存失敗：瀏覽器不允許本機儲存', false);
+            }
+        }
+
+        function loadTutorialTextSettings() {
+            try {
+                const raw = localStorage.getItem(TUTORIAL_TEXT_STORAGE_KEY);
+                if (!raw) return;
+                const data = JSON.parse(raw);
+                if (data?.format !== '4CH_CKT_TUTORIAL_TEXT_SETTINGS') return;
+                applyTutorialTextSettings(data);
+                tutorialEditorStatus('已載入上次儲存的設定', true);
+            } catch (error) {
+                tutorialEditorStatus('讀取上次設定失敗，使用內建文字', false);
+            }
+        }
+
+        function exportTutorialTextSettings() {
+            const data = collectTutorialTextSettings();
+            const blob = new Blob([JSON.stringify(data, null, 2)], {type:'application/json;charset=utf-8'});
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            const stamp = new Date().toISOString().replace(/[:.]/g,'-');
+            a.href = url;
+            a.download = `4CH_CKT_教學文字設定_${stamp}.json`;
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+            URL.revokeObjectURL(url);
+            tutorialEditorDirty = false;
+            tutorialEditorStatus('已匯出目前全部教學文字', true);
+        }
+
+        function importTutorialTextSettings(input) {
+            const file = input?.files?.[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = () => {
+                try {
+                    applyTutorialTextSettings(JSON.parse(String(reader.result || '')));
+                } catch (error) {
+                    tutorialEditorStatus(`匯入失敗：${error.message || '設定檔格式錯誤'}`, false);
+                }
+                input.value = '';
+            };
+            reader.onerror = () => {
+                tutorialEditorStatus('匯入失敗：無法讀取檔案', false);
+                input.value = '';
+            };
+            reader.readAsText(file, 'utf-8');
+        }
+
+        function resetTutorialTextSettings() {
+            if (!confirm('確定要把開機、關機、自動流程與元件教學文字全部恢復成內建內容嗎？')) return;
+            const groups = [
+                ['power', powerSequenceGuides],
+                ['auto', autoPhaseTutorials],
+                ['component', tutorialGuides]
+            ];
+            for (const [group, targetMap] of groups) {
+                const defaults = tutorialTextDefaults[group] || {};
+                for (const key of Object.keys(targetMap)) {
+                    const src = defaults[key];
+                    if (!src) continue;
+                    targetMap[key].title = src.title;
+                    targetMap[key].body = src.body;
+                    targetMap[key].next = src.next;
+                }
+            }
+            localStorage.removeItem(TUTORIAL_TEXT_STORAGE_KEY);
+            tutorialEditorDirty = false;
+            tutorialEditorStatus('已恢復內建文字', true);
+            renderTutorialEditor();
+        }
 
         function findTutorialItem(anchor) {
             if (!anchor) return null;
@@ -5184,16 +5463,21 @@ const dcLayerTargets = ['DC1_A', 'DC1_B', 'DC2_A', 'DC2_B'];
 
         function showScadaPage(page) {
             const parameters = page === 'parameters';
-            document.getElementById('main-panel').classList.toggle('hidden', parameters);
-            document.getElementById('control-panel').classList.toggle('hidden', parameters);
+            const system = page === 'system';
+            document.getElementById('main-panel').classList.toggle('hidden', parameters || system);
+            document.getElementById('control-panel').classList.toggle('hidden', parameters || system);
             document.getElementById('parameters-page').classList.toggle('hidden', !parameters);
-            document.getElementById('tab-main').classList.toggle('bg-gray-200', !parameters);
+            document.getElementById('system-page').classList.toggle('hidden', !system);
+            document.getElementById('tab-main').classList.toggle('bg-gray-200', !parameters && !system);
             document.getElementById('tab-parameters').classList.toggle('bg-gray-200', parameters);
             if (parameters) {
                 movePowerPanelToParameters();
                 initPowerPanelDrag();
                 renderLayerEditor();
                 renderManualParameterActuals();
+            } else if (system) {
+                movePowerPanelToMain();
+                renderTutorialEditor();
             } else {
                 movePowerPanelToMain();
             }
@@ -7182,11 +7466,13 @@ const dcLayerTargets = ['DC1_A', 'DC1_B', 'DC2_A', 'DC2_B'];
         }
 
         window.onload = function() {
+            loadTutorialTextSettings();
             movePowerPanelToMain();
             initPowerPanelDrag();
             setDashboardVisibility();
             updatePressureFloorPreview();
             updateCpThermalPreview();
+            renderTutorialEditor();
             requestAnimationFrame(animateSystem);
         };
     </script>
